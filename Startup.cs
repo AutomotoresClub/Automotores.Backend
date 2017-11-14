@@ -29,7 +29,7 @@ namespace Automotores.Backend
 
             services.AddAutoMapper();
             services.AddMvc();
-            services.AddDbContext<AutomotoresDbContext>(options => options.UseMySql(Configuration["Logging:ConnectionStrings:IntergraficDatabase"]));
+            services.AddDbContext<AutomotoresDbContext>(options => options.UseMySql(Configuration["Logging:ConnectionStrings:AutomotoresDatabase"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

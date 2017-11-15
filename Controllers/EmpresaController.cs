@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Automotores.Backend.Controllers
 {
+    [Route("/api/empresas")]
     public class EmpresaController : Controller
     {
         private readonly IMapper mapper;

@@ -10,6 +10,7 @@ namespace Automotores.Backend.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<Mercado, KeyValuePairResource>();
             CreateMap<Empresa, SaveEmpresaResource>()
             .ForMember(er => er.Representante, opt => opt.MapFrom(e => new RepresentanteResource { NombreRepresentante = e.NombreRepresentante, IdentificacionRepresentante = e.IdentificacionRepresentante }))
             .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => em.MercadoId)))

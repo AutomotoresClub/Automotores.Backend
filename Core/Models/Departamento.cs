@@ -12,6 +12,8 @@ namespace Automotores.Backend.Core.Models
         [StringLength(255)]
         public string Nombre { get; set; }
 
+        public int Indicativo { get; set; }
+
         public ICollection<Ciudad> Ciudades { get; set; }
 
         public Departamento()

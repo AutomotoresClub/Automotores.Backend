@@ -8,7 +8,7 @@ namespace Automotores.Backend.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("INSERT INTO TipoDocumento (Nombre) Values ('CC')");
+            migrationBuilder.Sql("INSERT INTO Departamentos (Nombre, Indicativo) Values ('ANTIOQUIA',)");
             migrationBuilder.Sql("INSERT INTO TipoDocumento (Nombre) Values ('NIT')");
         }
 

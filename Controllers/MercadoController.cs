@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Automotores.Backend.Controllers.Resources;
+using Automotores.Backend.Core.Models;
 using Automotores.Backend.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +22,9 @@ namespace Automotores.Backend.Controllers
         [HttpGet]
         public async Task<IEnumerable<MercadoResource>> GetMercado()
         {
-            var mercado = await context.Mercado.ToListAsync();
+            var mercado = await context.Mercado.Include(m =>m.ClaseVehiculos).ToListAsync();
 
+            return mapper.Map<List<Mercado>, List<MercadoResource>>(mercado);
         }
     }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Automotores.Backend.Core.Models
@@ -32,5 +34,12 @@ namespace Automotores.Backend.Core.Models
         public Empresa Empresa { get; set; }
 
         public int EmpresaId { get; set; }
+
+        public ICollection<Establecimiento> Establecimientos { get; set; }
+
+        public Administrador()
+        {
+            Establecimientos = new Collection<Establecimiento>();
+        }
     }
 }

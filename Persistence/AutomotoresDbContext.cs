@@ -15,6 +15,10 @@ namespace Automotores.Backend.Persistence
 
         public DbSet<Servicio> Servicios { get; set; }
 
+        public DbSet<ServicioEmergencia> ServiciosEmergencia { get; set; }
+
+        public DbSet<DiasSemana> DiasSemana { get; set; }
+
         public DbSet<Mercado> Mercado { get; set; }
 
         public DbSet<ClaseVehiculo> ClaseVehiculo { get; set; }
@@ -26,6 +30,8 @@ namespace Automotores.Backend.Persistence
         public DbSet<Empresa> Empresas { get; set; }
 
         public DbSet<Administrador> Administradores { get; set; }
+
+        public DbSet<Establecimiento> Establecimientos { get; set; }
 
         public AutomotoresDbContext(DbContextOptions<AutomotoresDbContext> options) : base(options)
         {
@@ -39,6 +45,18 @@ namespace Automotores.Backend.Persistence
 
             modelBuilder.Entity<EmpresaServicio>().HasKey(vf =>
             new { vf.EmpresaId, vf.ServicioId });
+
+            modelBuilder.Entity<EstablecimientoMercado>().HasKey(vf =>
+            new { vf.EstablecimientoId, vf.MercadoId });
+
+            modelBuilder.Entity<EstablecimientoServicio>().HasKey(vf =>
+            new { vf.EstablecimientoId, vf.ServicioId });
+
+            modelBuilder.Entity<HorarioEstablecimiento>().HasKey(vf =>
+            new { vf.EstablecimientoId, vf.DiasSemanaId });
+
+            modelBuilder.Entity<EstablecimientoServicioEmergencia>().HasKey(vf =>
+            new { vf.EstablecimientoId, vf.ServicioEmergenciId });
         }
     }
 }

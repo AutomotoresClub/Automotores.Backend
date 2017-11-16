@@ -11,9 +11,10 @@ using System;
 namespace Automotores.Backend.Migrations
 {
     [DbContext(typeof(AutomotoresDbContext))]
-    partial class AutomotoresDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171116162702_AddEstablecimiento")]
+    partial class AddEstablecimiento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,18 +104,6 @@ namespace Automotores.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departamentos");
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.DiasSemana", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Nombre");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DiasSemana");
                 });
 
             modelBuilder.Entity("Automotores.Backend.Core.Models.Empresa", b =>
@@ -276,61 +265,7 @@ namespace Automotores.Backend.Migrations
 
                     b.HasIndex("CiudadId");
 
-                    b.ToTable("Establecimientos");
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.EstablecimientoMercado", b =>
-                {
-                    b.Property<int>("EstablecimientoId");
-
-                    b.Property<int>("MercadoId");
-
-                    b.HasKey("EstablecimientoId", "MercadoId");
-
-                    b.HasIndex("MercadoId");
-
-                    b.ToTable("EstablecimientoMercado");
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.EstablecimientoServicio", b =>
-                {
-                    b.Property<int>("EstablecimientoId");
-
-                    b.Property<int>("ServicioId");
-
-                    b.HasKey("EstablecimientoId", "ServicioId");
-
-                    b.HasIndex("ServicioId");
-
-                    b.ToTable("EstablecimientoServicio");
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.EstablecimientoServicioEmergencia", b =>
-                {
-                    b.Property<int>("EstablecimientoId");
-
-                    b.Property<int>("ServicioEmergenciId");
-
-                    b.Property<int?>("ServicioEmergenciaId");
-
-                    b.HasKey("EstablecimientoId", "ServicioEmergenciId");
-
-                    b.HasIndex("ServicioEmergenciaId");
-
-                    b.ToTable("EstablecimientoServicioEmergencia");
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.HorarioEstablecimiento", b =>
-                {
-                    b.Property<int>("EstablecimientoId");
-
-                    b.Property<int>("DiasSemanaId");
-
-                    b.HasKey("EstablecimientoId", "DiasSemanaId");
-
-                    b.HasIndex("DiasSemanaId");
-
-                    b.ToTable("HorarioEstablecimiento");
+                    b.ToTable("Establecimiento");
                 });
 
             modelBuilder.Entity("Automotores.Backend.Core.Models.Linea", b =>
@@ -406,18 +341,6 @@ namespace Automotores.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Servicios");
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.ServicioEmergencia", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Nombre");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServiciosEmergencia");
                 });
 
             modelBuilder.Entity("Automotores.Backend.Core.Models.TipoDocumento", b =>
@@ -510,57 +433,6 @@ namespace Automotores.Backend.Migrations
                     b.HasOne("Automotores.Backend.Core.Models.Ciudad", "Ciudad")
                         .WithMany()
                         .HasForeignKey("CiudadId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.EstablecimientoMercado", b =>
-                {
-                    b.HasOne("Automotores.Backend.Core.Models.Establecimiento", "Establecimiento")
-                        .WithMany()
-                        .HasForeignKey("EstablecimientoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.Mercado", "Mercado")
-                        .WithMany()
-                        .HasForeignKey("MercadoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.EstablecimientoServicio", b =>
-                {
-                    b.HasOne("Automotores.Backend.Core.Models.Establecimiento", "Establecimiento")
-                        .WithMany()
-                        .HasForeignKey("EstablecimientoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.Servicio", "Servicio")
-                        .WithMany()
-                        .HasForeignKey("ServicioId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.EstablecimientoServicioEmergencia", b =>
-                {
-                    b.HasOne("Automotores.Backend.Core.Models.Establecimiento", "Establecimiento")
-                        .WithMany()
-                        .HasForeignKey("EstablecimientoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.ServicioEmergencia", "ServicioEmergencia")
-                        .WithMany()
-                        .HasForeignKey("ServicioEmergenciaId");
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.HorarioEstablecimiento", b =>
-                {
-                    b.HasOne("Automotores.Backend.Core.Models.DiasSemana", "DiasSemana")
-                        .WithMany()
-                        .HasForeignKey("DiasSemanaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.Establecimiento", "Establecimiento")
-                        .WithMany()
-                        .HasForeignKey("EstablecimientoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

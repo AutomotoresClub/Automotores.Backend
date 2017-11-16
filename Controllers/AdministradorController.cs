@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Automotores.Backend.Controllers.Resources;
@@ -80,6 +81,15 @@ namespace Automotores.Backend.Controllers
             var administrador = await repository.GetAdministrador(id);
 
             return mapper.Map<Administrador, AdministradorResource>(administrador);
+        }
+
+        [Route("~/api/empresa/{id}/administradores")]
+        [HttpGet]
+        public async Task<IEnumerable<AdministradorResource>> GetAdministradores(int id)
+        {
+            var administradores = await repository.GetAdministradores(id);
+
+            return mapper.Map<IEnumerable<Administrador>, IEnumerable<AdministradorResource>>(administradores);
         }
     }
 }

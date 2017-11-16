@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Automotores.Backend.Core;
 using Automotores.Backend.Core.Models;
@@ -21,6 +23,12 @@ namespace Automotores.Backend.Persistence
         public async Task<Administrador> GetAdministrador(int id)
         {
             return await context.Administradores.SingleOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<IEnumerable<Administrador>> GetAdministradores(int id)
+        {
+            
+            return await context.Administradores.Where(a => a.EmpresaId == id).ToListAsync();
         }
     }
 }

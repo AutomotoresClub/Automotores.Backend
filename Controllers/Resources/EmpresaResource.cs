@@ -8,19 +8,15 @@ namespace Automotores.Backend.Controllers.Resources
     {
         public int Id { get; set; }
 
-        public int Nit { get; set; }
+        public string Nit { get; set; }
 
         public string RazonSocial { get; set; }
 
         public string Direccion { get; set; }
 
-        public string RepresentanteNombre { get; set; }
-
-        public int RepresentanteIdentificacion { get; set; }
-
         public string Email { get; set; }
 
-        public int Telefono { get; set; }
+        public string Telefono { get; set; }
 
         public string Password { get; set; }
 
@@ -41,6 +37,8 @@ namespace Automotores.Backend.Controllers.Resources
         public DateTime FechaCreacion { get; set; }
 
         public DateTime FechaActualizacion { get; set; }
+
+        public RepresentanteResource Representante { get; set; }
 
         public KeyValuePairResource Ciudad { get; set; }
 

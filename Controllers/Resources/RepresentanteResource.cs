@@ -6,10 +6,10 @@ namespace Automotores.Backend.Controllers.Resources
     {
         [Required]
         [StringLength(255)]
-        public string NombreRepresentante { get; set; }
+        public string Nombre { get; set; }
 
         [Required]
-        [Range(7, 10, ErrorMessage = "La identificación del representante debe ser entre 7 a 11")]
-        public int IdentificacionRepresentante { get; set; }
+        [StringLength(15)]
+        public string Identificacion { get; set; }
     }
 }

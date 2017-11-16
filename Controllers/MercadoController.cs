@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Automotores.Backend.Controllers
 {
+    [Route("/api/mercado")]
     public class MercadoController : Controller
     {
         private readonly AutomotoresDbContext context;
@@ -20,11 +21,11 @@ namespace Automotores.Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<MercadoResource>> GetMercado()
+        public async Task<IEnumerable<KeyValuePairResource>> GetMercado()
         {
-            var mercado = await context.Mercado.Include(m =>m.ClaseVehiculos).ToListAsync();
+            var mercado = await context.Mercado.ToListAsync();
 
-            return mapper.Map<List<Mercado>, List<MercadoResource>>(mercado);
+            return mapper.Map<List<Mercado>, List<KeyValuePairResource>>(mercado);
         }
     }
 }

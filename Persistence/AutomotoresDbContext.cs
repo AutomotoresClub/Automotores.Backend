@@ -25,10 +25,13 @@ namespace Automotores.Backend.Persistence
 
         public DbSet<Empresa> Empresas { get; set; }
 
-        public AutomotoresDbContext(DbContextOptions<AutomotoresDbContext> options) : base(options) { }
+        public AutomotoresDbContext(DbContextOptions<AutomotoresDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<EmpresaMercado>().HasKey(vf =>
             new { vf.EmpresaId, vf.MercadoId });
 

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Automotores.Backend.Core;
 using Automotores.Backend.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Automotores.Backend.Persistence
 {
@@ -14,7 +15,15 @@ namespace Automotores.Backend.Persistence
 
         public async Task<Empresa> GetEmpresa(int id)
         {
-            return await context.Empresas.FindAsync(id);
+            return await context.Empresas
+            .Include(e => e.MercadoObjetivo)
+                .ThenInclude(em => em.Mercado)
+            .Include(e => e.EmpresaServicios)
+                .ThenInclude(es => es.Servicio)
+            .Include(e => e.Ciudad)
+            .Include(e => e.Regimen)
+            .Include(e => e.TipoDocumento)
+            .SingleOrDefaultAsync(e => e.Id == id);
         }
 
         public void Add(Empresa empresa)

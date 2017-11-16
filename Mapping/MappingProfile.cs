@@ -10,9 +10,19 @@ namespace Automotores.Backend.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<Departamento, KeyValuePairResource>();
+            CreateMap<Ciudad, KeyValuePairResource>();
+            CreateMap<TipoDocumento, KeyValuePairResource>();
             CreateMap<Mercado, KeyValuePairResource>();
+            CreateMap<Servicio, KeyValuePairResource>();
+
+            CreateMap<Empresa, EmpresaResource>()
+            .ForMember(er => er.Representante, opt => opt.MapFrom(e => new RepresentanteResource { Nombre = e.NombreRepresentante, Identificacion = e.IdentificacionRepresentante }))
+            .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => em.MercadoId))).ForMember(er => er.EmpresaServicios, opt => opt.MapFrom(e => e.EmpresaServicios.Select(es => new KeyValuePairResource { Id = es.Servicio.Id, Nombre = es.Servicio.Nombre })))
+            .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => new KeyValuePairResource { Id = em.Mercado.Id, Nombre = em.Mercado.Nombre })));
+
             CreateMap<Empresa, SaveEmpresaResource>()
-            .ForMember(er => er.Representante, opt => opt.MapFrom(e => new RepresentanteResource { NombreRepresentante = e.NombreRepresentante, IdentificacionRepresentante = e.IdentificacionRepresentante }))
+            .ForMember(er => er.Representante, opt => opt.MapFrom(e => new RepresentanteResource { Nombre = e.NombreRepresentante, Identificacion = e.IdentificacionRepresentante }))
             .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => em.MercadoId)))
             .ForMember(er => er.EmpresaServicios, opt => opt.MapFrom(e => e.EmpresaServicios.Select(es => es.ServicioId)));
 
@@ -20,8 +30,8 @@ namespace Automotores.Backend.Mapping
 
             CreateMap<SaveEmpresaResource, Empresa>()
             .ForMember(e => e.Id, opt => opt.Ignore())
-            .ForMember(e => e.NombreRepresentante, opt => opt.MapFrom(er => er.Representante.NombreRepresentante))
-            .ForMember(e => e.IdentificacionRepresentante, opt => opt.MapFrom(er => er.Representante.IdentificacionRepresentante))
+            .ForMember(e => e.NombreRepresentante, opt => opt.MapFrom(er => er.Representante.Nombre))
+            .ForMember(e => e.IdentificacionRepresentante, opt => opt.MapFrom(er => er.Representante.Identificacion))
             .ForMember(e => e.MercadoObjetivo, opt => opt.Ignore())
             .AfterMap((er, e) =>
             {

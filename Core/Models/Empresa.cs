@@ -12,8 +12,8 @@ namespace Automotores.Backend.Core.Models
         public int Id { get; set; }
 
         [Required]
-        [Range(7, 10, ErrorMessage = "El NIT debe ser entre 7 a 11")]
-        public int Nit { get; set; }
+        [StringLength(15)]
+        public string Nit { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -28,16 +28,16 @@ namespace Automotores.Backend.Core.Models
         public string NombreRepresentante { get; set; }
 
         [Required]
-        [Range(7, 10, ErrorMessage = "La identificación del representante debe ser entre 7 a 11")]
-        public int IdentificacionRepresentante { get; set; }
+        [StringLength(15)]
+        public string IdentificacionRepresentante { get; set; }
 
         [Required]
         [EmailAddress(ErrorMessage = "Email invalido")]
         public string Email { get; set; }
 
         [Required]
-        [Range(7, 10, ErrorMessage = "El numero de telefono debe ser entre 7 a 11")]
-        public int Telefono { get; set; }
+        [StringLength(15)]
+        public string Telefono { get; set; }
 
         [Required]
         [StringLength(16)]

@@ -42,5 +42,29 @@ namespace Automotores.Backend.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveEmpresaResource empresaResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var empresa = await repository.GetEmpresa(id);
+
+            if (empresa == null)
+                return NotFound();
+
+            mapper.Map<SaveEmpresaResource, Empresa>(empresaResource, empresa);
+
+            empresa.FechaActualizacion = DateTime.Now;
+
+            await unitOfWork.CompleteAsync();
+
+            empresa = await repository.GetEmpresa(empresa.Id);
+
+            var result = mapper.Map<Empresa, EmpresaResource>(empresa);
+
+            return Ok(result);
+        }
     }
 }

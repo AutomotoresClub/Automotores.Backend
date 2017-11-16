@@ -14,9 +14,11 @@ namespace Automotores.Backend.Controllers
         private readonly IMapper mapper;
         private readonly IEmpresaRepository repository;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMailRepository mailRepository;
 
-        public EmpresaController(IMapper mapper, IEmpresaRepository repository, IUnitOfWork unitOfWork)
+        public EmpresaController(IMapper mapper, IEmpresaRepository repository, IUnitOfWork unitOfWork, IMailRepository mailRepository)
         {
+            this.mailRepository = mailRepository;
             this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.mapper = mapper;
@@ -57,14 +59,25 @@ namespace Automotores.Backend.Controllers
             mapper.Map<SaveEmpresaResource, Empresa>(empresaResource, empresa);
 
             empresa.FechaActualizacion = DateTime.Now;
+            empresa.Estado = 1;
 
             await unitOfWork.CompleteAsync();
 
             empresa = await repository.GetEmpresa(empresa.Id);
 
+            await mailRepository.SendEmail();
+
             var result = mapper.Map<Empresa, EmpresaResource>(empresa);
 
             return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<EmpresaResource> GetEmpresa(int id)
+        {
+            var empresa = await repository.GetEmpresa(id);
+
+            return mapper.Map<Empresa, EmpresaResource>(empresa);
         }
     }
 }

@@ -25,8 +25,6 @@ namespace Automotores.Backend.Controllers.Resources
 
         public int NumeroEstablecimientos { get; set; }
 
-        public int Estado { get; set; }
-
         public string Rut { get; set; }
 
         public string CamaraComercio { get; set; }

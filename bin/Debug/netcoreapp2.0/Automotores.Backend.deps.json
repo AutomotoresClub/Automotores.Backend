@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "cd506f99537da6e4fdc94f0c5f72dcef8fb4ed16"
+    "signature": "c4bf21952faaf5844690516836023d5198fa8a16"
   },
   "compilationOptions": {
     "defines": [
@@ -23,6 +23,10 @@
     ".NETCoreApp,Version=v2.0": {
       "Automotores.Backend/1.0.0": {
         "dependencies": {
+          "AWSSDK.Core": "3.3.19",
+          "AWSSDK.Extensions.NETCore.Setup": "3.3.4",
+          "AWSSDK.S3": "3.3.13",
+          "AWSSDK.SimpleEmail": "3.3.5",
           "AutoMapper": "6.2.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.1.0",
           "Microsoft.AspNetCore.All": "2.0.0",
@@ -30,7 +34,8 @@
           "Microsoft.EntityFrameworkCore.Tools.DotNet": "2.0.0",
           "Microsoft.NETCore.App": "2.0.0",
           "MySql.Data": "6.10.4",
-          "Pomelo.EntityFrameworkCore.MySql": "2.0.0.1"
+          "Pomelo.EntityFrameworkCore.MySql": "2.0.0.1",
+          "SharpRaven": "2.2.0"
         },
         "runtime": {
           "Automotores.Backend.dll": {}
@@ -71,6 +76,56 @@
         },
         "compile": {
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.3.19": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.4.0",
+          "System.Net.Requests": "4.0.11",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Security.Cryptography.Csp": "4.3.0",
+          "System.Threading.Thread": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.Core.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/AWSSDK.Core.dll": {}
+        }
+      },
+      "AWSSDK.Extensions.NETCore.Setup/3.3.4": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.19",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.Extensions.NETCore.Setup.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/AWSSDK.Extensions.NETCore.Setup.dll": {}
+        }
+      },
+      "AWSSDK.S3/3.3.13": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.19"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.S3.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/AWSSDK.S3.dll": {}
+        }
+      },
+      "AWSSDK.SimpleEmail/3.3.5": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.19"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.SimpleEmail.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/AWSSDK.SimpleEmail.dll": {}
         }
       },
       "Libuv/1.10.0": {
@@ -2683,6 +2738,17 @@
           }
         }
       },
+      "SharpRaven/2.2.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "runtime": {
+          "lib/net45/SharpRaven.dll": {}
+        },
+        "compile": {
+          "lib/net45/SharpRaven.dll": {}
+        }
+      },
       "SQLitePCLRaw.bundle_green/1.1.7": {
         "dependencies": {
           "SQLitePCLRaw.core": "1.1.7",
@@ -3365,6 +3431,33 @@
           "System.Runtime.Handles": "4.3.0"
         }
       },
+      "System.Net.Requests/4.0.11": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "2.0.0",
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.0.1",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        },
+        "runtimeTargets": {
+          "runtime/unix/lib/_._": {
+            "rid": "unix",
+            "assetType": "runtime"
+          },
+          "runtime/win/lib/_._": {
+            "rid": "win",
+            "assetType": "runtime"
+          }
+        }
+      },
       "System.Net.Security/4.3.1": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
@@ -3415,6 +3508,14 @@
           "System.Net.Primitives": "4.3.0",
           "System.Runtime": "4.3.0",
           "System.Threading.Tasks": "4.3.0"
+        }
+      },
+      "System.Net.WebHeaderCollection/4.0.1": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
         }
       },
       "System.Numerics.Vectors/4.4.0": {},
@@ -4304,6 +4405,34 @@
       "sha512": "sha512-IWvYn9BMBrIL7bRfDBhkmEtYmTlbxjPDGfhgOEJFI3vvdctfn+wgtZNDu1NhZvc63dB+m7XIf1HxCm1SsNMizA==",
       "path": "automapper.extensions.microsoft.dependencyinjection/3.1.0",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.3.1.0.nupkg.sha512"
+    },
+    "AWSSDK.Core/3.3.19": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zmXaVNKtbQ1RfwHawEkKM7nvkSeWjljwiBKtaUpf2Woni/vmYd5l0gY54dNVN7Z9IsCoxwitGcFfJYOtrE/upg==",
+      "path": "awssdk.core/3.3.19",
+      "hashPath": "awssdk.core.3.3.19.nupkg.sha512"
+    },
+    "AWSSDK.Extensions.NETCore.Setup/3.3.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-N61Fi4zzIlRl8gY+6SNFyuKEb5FU0UhDIhcPleyK5W/uj0kS0VTSyDfF28QXisiSf0ynSh+QlL9UK+GTPnsDlA==",
+      "path": "awssdk.extensions.netcore.setup/3.3.4",
+      "hashPath": "awssdk.extensions.netcore.setup.3.3.4.nupkg.sha512"
+    },
+    "AWSSDK.S3/3.3.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8WgT43qP1yzM935ATia6oU9VNL99BJNic54NiqPSy2v5yHM9uCFoENtc6VnTTrsrYN+DhX02VzH85uFgLSw06A==",
+      "path": "awssdk.s3/3.3.13",
+      "hashPath": "awssdk.s3.3.3.13.nupkg.sha512"
+    },
+    "AWSSDK.SimpleEmail/3.3.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eTrI/NAaBjJ2vzuqUgiSszYV5Igc9GbPM5s6lcQztNgmVRwhKBb+KvNwKhl3oUBe82UYLd0aibENWUZlr9ryfQ==",
+      "path": "awssdk.simpleemail/3.3.5",
+      "hashPath": "awssdk.simpleemail.3.3.5.nupkg.sha512"
     },
     "Libuv/1.10.0": {
       "type": "package",
@@ -5642,6 +5771,13 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
+    "SharpRaven/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bdO21ZJRLAiPNH9x5To9nOyAg+GpguDnh4lViYogdJrONnoaCmXe7Dz6lMXuBQ2qAkRheiYFp5R0g5Ue9jNW6w==",
+      "path": "sharpraven/2.2.0",
+      "hashPath": "sharpraven.2.2.0.nupkg.sha512"
+    },
     "SQLitePCLRaw.bundle_green/1.1.7": {
       "type": "package",
       "serviceable": true,
@@ -5992,6 +6128,13 @@
       "path": "system.net.primitives/4.3.0",
       "hashPath": "system.net.primitives.4.3.0.nupkg.sha512"
     },
+    "System.Net.Requests/4.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vxGt7C0cZixN+VqoSW4Yakc1Y9WknmxauDqzxgpw/FnBdz4kQNN51l4wxdXX5VY1xjqy//+G+4CvJWp1+f+y6Q==",
+      "path": "system.net.requests/4.0.11",
+      "hashPath": "system.net.requests.4.0.11.nupkg.sha512"
+    },
     "System.Net.Security/4.3.1": {
       "type": "package",
       "serviceable": true,
@@ -6005,6 +6148,13 @@
       "sha512": "sha512-m6icV6TqQOAdgt5N/9I5KNpjom/5NFtkmGseEH+AK/hny8XrytLH3+b5M8zL/Ycg3fhIocFpUMyl/wpFnVRvdw==",
       "path": "system.net.sockets/4.3.0",
       "hashPath": "system.net.sockets.4.3.0.nupkg.sha512"
+    },
+    "System.Net.WebHeaderCollection/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XX2TIAN+wBSAIV51BU2FvvXMdstUa8b0FBSZmDWjZdwUMmggQSifpTOZ5fNH20z9ZCg2fkV1L5SsZnpO2RQDRQ==",
+      "path": "system.net.webheadercollection/4.0.1",
+      "hashPath": "system.net.webheadercollection.4.0.1.nupkg.sha512"
     },
     "System.Numerics.Vectors/4.4.0": {
       "type": "package",

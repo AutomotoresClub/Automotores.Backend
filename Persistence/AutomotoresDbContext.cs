@@ -25,6 +25,8 @@ namespace Automotores.Backend.Persistence
 
         public DbSet<Empresa> Empresas { get; set; }
 
+        public DbSet<Administrador> Administradores { get; set; }
+
         public AutomotoresDbContext(DbContextOptions<AutomotoresDbContext> options) : base(options)
         {
         }

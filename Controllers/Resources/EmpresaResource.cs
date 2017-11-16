@@ -50,10 +50,14 @@ namespace Automotores.Backend.Controllers.Resources
 
         public ICollection<KeyValuePairResource> EmpresaServicios { get; set; }
 
+        public ICollection<AdministradorResource> Administradores { get; set; }
+
         public EmpresaResource()
         {
             MercadoObjetivo = new Collection<KeyValuePairResource>();
             EmpresaServicios = new Collection<KeyValuePairResource>();
+
+            Administradores = new Collection<AdministradorResource>();
         }
     }
 }

@@ -87,10 +87,13 @@ namespace Automotores.Backend.Core.Models
 
         public ICollection<EmpresaServicio> EmpresaServicios { get; set; }
 
+        public ICollection<Administrador> Administradores { get; set; }
+
         public Empresa()
         {
             MercadoObjetivo = new Collection<EmpresaMercado>();
             EmpresaServicios = new Collection<EmpresaServicio>();
+            Administradores = new Collection<Administrador>();
         }
 
     }

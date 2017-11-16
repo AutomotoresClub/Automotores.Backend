@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.SimpleEmail;
 using AutoMapper;
 using Automotores.Backend.Core;
+using Automotores.Backend.Core.Models;
 using Automotores.Backend.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,11 +30,18 @@ namespace Automotores.Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+            services.AddScoped<IAdministradorRepository, AdministradorRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IErrorReporter, SentryErrorReporter>();
+            services.AddScoped<IMailRepository, MailRepository>();
             services.AddAutoMapper();
             services.AddMvc();
-            services.AddDbContext<AutomotoresDbContext>(options => options.UseMySql(Configuration["Logging:ConnectionStrings:AutomotoresDatabase"]));
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            services.AddAWSService<IAmazonSimpleEmailService>();
+            services.AddDbContext<AutomotoresDbContext>(options => options.UseMySql(Configuration["ConnectionStrings:AutomotoresDatabase"]));
+            services.Configure<SentryOptions>(Configuration.GetSection("Sentry"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

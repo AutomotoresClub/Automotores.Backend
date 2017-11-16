@@ -26,6 +26,9 @@ namespace Automotores.Backend.Mapping
             .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => em.MercadoId)))
             .ForMember(er => er.EmpresaServicios, opt => opt.MapFrom(e => e.EmpresaServicios.Select(es => es.ServicioId)));
 
+            CreateMap<Administrador, AdministradorResource>();
+            CreateMap<Administrador, SaveAdministradorResource>();
+
             //Api Resource to Domain
 
             CreateMap<SaveEmpresaResource, Empresa>()
@@ -62,6 +65,8 @@ namespace Automotores.Backend.Mapping
                 foreach (var f in servicioAgregado)
                     e.EmpresaServicios.Add(f);
             });
+
+            CreateMap<SaveAdministradorResource, Administrador>();
         }
     }
 }

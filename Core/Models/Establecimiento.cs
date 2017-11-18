@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Automotores.Backend.Core.Models
@@ -31,7 +33,6 @@ namespace Automotores.Backend.Core.Models
         [StringLength(300)]
         public string Descripcion { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string Ruta { get; set; }
 
@@ -58,6 +59,20 @@ namespace Automotores.Backend.Core.Models
         public Administrador Administrador { get; set; }
 
         public int AdministradorId { get; set; }
+
+
+        public ICollection<EstablecimientoServicio> Servicios { get; set; }
+
+        public ICollection<EstablecimientoMercado> Mercado { get; set; }
+
+        public ICollection<HorarioEstablecimiento> Horario { get; set; }
+
+        public Establecimiento()
+        {
+            Servicios = new Collection<EstablecimientoServicio>();
+            Mercado = new Collection<EstablecimientoMercado>();
+            Horario = new Collection<HorarioEstablecimiento>();
+        }
 
     }
 }

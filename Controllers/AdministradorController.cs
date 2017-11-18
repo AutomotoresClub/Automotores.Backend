@@ -13,7 +13,6 @@ namespace Automotores.Backend.Controllers
     [Route("/api/administradores")]
     public class AdministradorController : Controller
     {
-        private readonly AutomotoresDbContext context;
         private readonly IMapper mapper;
         private readonly IAdministradorRepository repository;
         private readonly IUnitOfWork unitOfWork;
@@ -24,7 +23,6 @@ namespace Automotores.Backend.Controllers
             this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.mapper = mapper;
-            this.context = context;
         }
 
         [HttpPost]

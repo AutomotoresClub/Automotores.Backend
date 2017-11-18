@@ -11,9 +11,10 @@ using System;
 namespace Automotores.Backend.Migrations
 {
     [DbContext(typeof(AutomotoresDbContext))]
-    partial class AutomotoresDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171117214620_UpdateHorarioEstablecimientoNullable")]
+    partial class UpdateHorarioEstablecimientoNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,6 +258,7 @@ namespace Automotores.Backend.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("Ruta")
+                        .IsRequired()
                         .HasMaxLength(255);
 
                     b.Property<string>("Telefono")

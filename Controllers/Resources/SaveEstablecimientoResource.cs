@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using Automotores.Backend.Core.Models;
 
 namespace Automotores.Backend.Controllers.Resources
 {
-    public class EstablecimientoResource
+    public class SaveEstablecimientoResource
     {
         public int Id { get; set; }
 
@@ -14,10 +14,6 @@ namespace Automotores.Backend.Controllers.Resources
         public string Direccion { get; set; }
 
         public string Telefono { get; set; }
-
-        public string NombreContacto { get; set; }
-
-        public string TelefonoContacto { get; set; }
 
         public string Descripcion { get; set; }
 
@@ -29,24 +25,27 @@ namespace Automotores.Backend.Controllers.Resources
 
         public int Estado { get; set; }
 
+        public int CiudadId { get; set; }
+
+        public int AdministradorId { get; set; }
+
+        [Required]
         public ContactoResource Contacto { get; set; }
 
         public GeolocalizacionResource Geolocalizacion { get; set; }
 
-        public KeyValuePairResource Ciudad { get; set; }
+        public ICollection<int> Mercado { get; set; }
 
-        public ICollection<KeyValuePairResource> Servicios { get; set; }
-
-        public ICollection<KeyValuePairResource> Mercado { get; set; }
+        public ICollection<int> Servicios { get; set; }
 
         public ICollection<HorarioResource> Horario { get; set; }
 
-        public EstablecimientoResource()
+        public SaveEstablecimientoResource()
         {
-            Servicios = new Collection<KeyValuePairResource>();
-            Mercado = new Collection<KeyValuePairResource>();
+            Mercado = new Collection<int>();
+            Servicios = new Collection<int>();
             Horario = new Collection<HorarioResource>();
-        }
 
+        }
     }
 }

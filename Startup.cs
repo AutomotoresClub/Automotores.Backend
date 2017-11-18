@@ -33,6 +33,7 @@ namespace Automotores.Backend
 
             services.AddScoped<IEmpresaRepository, EmpresaRepository>();
             services.AddScoped<IAdministradorRepository, AdministradorRepository>();
+            services.AddScoped<IEstablecimientoRepository, EstablecimientoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IErrorReporter, SentryErrorReporter>();
             services.AddScoped<IMailRepository, MailRepository>();

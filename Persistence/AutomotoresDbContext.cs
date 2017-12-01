@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Automotores.Backend.Persistence
 {
+
     public class AutomotoresDbContext : DbContext
     {
+
         public DbSet<Departamento> Departamentos { get; set; }
 
         public DbSet<Ciudad> Ciudades { get; set; }
@@ -33,8 +35,15 @@ namespace Automotores.Backend.Persistence
 
         public DbSet<Establecimiento> Establecimientos { get; set; }
 
+        public DbSet<Promocion> Promociones { get; set; }
+
         public AutomotoresDbContext(DbContextOptions<AutomotoresDbContext> options) : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,6 +66,9 @@ namespace Automotores.Backend.Persistence
 
             modelBuilder.Entity<EstablecimientoServicioEmergencia>().HasKey(vf =>
             new { vf.EstablecimientoId, vf.ServicioEmergenciId });
+
+            modelBuilder.Entity<PromocionMercado>().HasKey(vf =>
+            new { vf.PromocionId, vf.MercadoId });
         }
     }
 }

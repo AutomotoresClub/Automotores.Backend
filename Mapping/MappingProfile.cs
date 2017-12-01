@@ -119,11 +119,11 @@ namespace Automotores.Backend.Mapping
             {
                 List<EstablecimientoServicio> servicioRetirados = e.Servicios.Where(f => !er.Servicios.Contains(f.ServicioId)).ToList();
 
+
                 foreach (var f in servicioRetirados)
                 {
                     e.Servicios.Remove(f);
                 }
-
                 //Add new features
                 var servicioAgregado = er.Servicios.Where(id => !e.Servicios.Any(f => f.ServicioId == id)).Select(id => new EstablecimientoServicio { ServicioId = id });
                 foreach (var f in servicioAgregado)
@@ -133,22 +133,21 @@ namespace Automotores.Backend.Mapping
             .AfterMap((er, e) =>
             {
 
-                List<HorarioEstablecimiento> horarioRetirados = e.Horario.Where(h => !e.Horario.Select(n => n.DiasSemanaId).Contains(h.DiasSemanaId)).ToList();
-                
-                // List<HorarioEstablecimiento> horarioRetirados = e.Horario.Where(h => h.GetType() != typeof(HorarioResource)).ToList();
-                // List<HorarioEstablecimiento> horarioRetirados = e.Horario.Select(c => c.DiasSemanaId).ToList();
-                Console.WriteLine(horarioRetirados.Count);
-                // Console.WriteLine(horarioRetirados);
+                List<HorarioEstablecimiento> horarioRetirados = e.Horario.Where(h => !er.Horario.Any(f => f.Id == h.DiasSemanaId)).ToList();
+
                 foreach (var h in horarioRetirados)
                 {
                     e.Horario.Remove(h);
                 }
 
                 //Add new features
-                // var servicioAgregado = er.Horario.Where(horario => !e.Horario.Any(f => f.GetType() == typeof(HorarioResource))).Select(horario => new HorarioEstablecimiento { DiasSemanaId = horario.Id, JornadaMañana = horario.JornadaMañana, JornadaTarde = horario.JornadaTarde, SubJornadaMañana = horario.SubJornadaMañana, SubJornadaTarde = horario.SubJornadaTarde });
+                var servicioAgregado = er.Horario.Where(horario => !e.Horario.Any(h => h.DiasSemanaId == horario.Id)).Select(horario => new HorarioEstablecimiento { DiasSemanaId = horario.Id, JornadaMañana = horario.JornadaMañana, JornadaTarde = horario.JornadaTarde, SubJornadaMañana = horario.SubJornadaMañana, SubJornadaTarde = horario.SubJornadaTarde });
 
-                // foreach (var f in servicioAgregado)
-                //     e.Horario.Add(f);
+                foreach (var f in servicioAgregado)
+                {
+                    e.Horario.Add(f);
+                }
+
             });
         }
     }

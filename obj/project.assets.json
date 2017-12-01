@@ -13781,11 +13781,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alejandro\\Desktop\\Automotores.Development\\Automotores.Backend\\Automotores.Backend.csproj",
+      "projectUniqueName": "C:\\Users\\Alejandro\\Desktop\\TRABAJO\\Automotores.Development\\Automotores.Backend\\Automotores.Backend.csproj",
       "projectName": "Automotores.Backend",
-      "projectPath": "C:\\Users\\Alejandro\\Desktop\\Automotores.Development\\Automotores.Backend\\Automotores.Backend.csproj",
+      "projectPath": "C:\\Users\\Alejandro\\Desktop\\TRABAJO\\Automotores.Development\\Automotores.Backend\\Automotores.Backend.csproj",
       "packagesPath": "C:\\Users\\Alejandro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alejandro\\Desktop\\Automotores.Development\\Automotores.Backend\\obj\\",
+      "outputPath": "C:\\Users\\Alejandro\\Desktop\\TRABAJO\\Automotores.Development\\Automotores.Backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

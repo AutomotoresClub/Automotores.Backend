@@ -8,3 +8,13 @@ C:\Users\Alejandro\Desktop\Automotores.Development\Automotores.Backend\obj\Debug
 C:\Users\Alejandro\Desktop\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.AssemblyInfo.cs
 C:\Users\Alejandro\Desktop\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.dll
 C:\Users\Alejandro\Desktop\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.pdb
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\bin\Debug\netcoreapp2.0\Automotores.Backend.deps.json
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\bin\Debug\netcoreapp2.0\Automotores.Backend.runtimeconfig.json
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\bin\Debug\netcoreapp2.0\Automotores.Backend.runtimeconfig.dev.json
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\bin\Debug\netcoreapp2.0\Automotores.Backend.dll
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\bin\Debug\netcoreapp2.0\Automotores.Backend.pdb
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.csproj.CoreCompileInputs.cache
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.AssemblyInfoInputs.cache
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.AssemblyInfo.cs
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.dll
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.pdb

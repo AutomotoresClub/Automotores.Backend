@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Automotores.Backend.Core;
 using Automotores.Backend.Core.Models;
@@ -31,6 +33,19 @@ namespace Automotores.Backend.Persistence
              .ThenInclude(e => e.DiasSemana)
             .Include(e => e.Ciudad)
             .SingleOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task<IEnumerable<Establecimiento>> GetEstablecimientos(int id)
+        {
+            return await context.Establecimientos
+            .Include(e => e.Servicios)
+                .ThenInclude(em => em.Servicio)
+            .Include(e => e.Mercado)
+                .ThenInclude(es => es.Mercado)
+            .Include(e => e.Horario)
+             .ThenInclude(e => e.DiasSemana)
+            .Include(e => e.Ciudad)
+            .Where(e => e.AdministradorId == id).ToListAsync();
         }
     }
 }

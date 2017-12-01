@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Automotores.Backend.Controllers.Resources;
@@ -80,6 +81,15 @@ namespace Automotores.Backend.Controllers
             var establecimiento = await repository.GetEstablecimiento(id);
 
             return mapper.Map<Establecimiento, EstablecimientoResource>(establecimiento);
+        }
+
+        [Route("~/api/administrador/{id}/establecimientos")]
+        [HttpGet]
+        public async Task<IEnumerable<EstablecimientoResource>> GetEstablecimientos(int id)
+        {
+            var establecimientos = await repository.GetEstablecimientos(id);
+
+            return mapper.Map<IEnumerable<Establecimiento>, IEnumerable<EstablecimientoResource>>(establecimientos);
         }
     }
 }

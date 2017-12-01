@@ -60,7 +60,6 @@ namespace Automotores.Backend.Core.Models
 
         public int AdministradorId { get; set; }
 
-
         public ICollection<EstablecimientoServicio> Servicios { get; set; }
 
         public ICollection<EstablecimientoMercado> Mercado { get; set; }

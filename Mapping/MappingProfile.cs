@@ -60,6 +60,10 @@ namespace Automotores.Backend.Mapping
             CreateMap<Promocion, SavePromocionResource>()
             .ForMember(pm => pm.Mercado, opt => opt.MapFrom(e => e.Mercado.Select(em => em.MercadoId)));
 
+            CreateMap<Usuario, UsuarioResource>()
+            .ForMember(vr => vr.Departamento, opt => opt.MapFrom(v => v.Ciudad.Departamento));
+
+            CreateMap<Usuario, SaveUsuarioResource>();
             //Api Resource to Domain
 
             CreateMap<SaveEmpresaResource, Empresa>()
@@ -97,7 +101,8 @@ namespace Automotores.Backend.Mapping
                     e.EmpresaServicios.Add(f);
             });
 
-            CreateMap<SaveAdministradorResource, Administrador>();
+            CreateMap<SaveAdministradorResource, Administrador>()
+            .ForMember(e => e.Id, opt => opt.Ignore());
 
             CreateMap<SaveEstablecimientoResource, Establecimiento>()
             .ForMember(e => e.Id, opt => opt.Ignore())
@@ -175,6 +180,9 @@ namespace Automotores.Backend.Mapping
                     e.Mercado.Add(f);
                 }
             });
+
+            CreateMap<SaveUsuarioResource, Usuario>()
+            .ForMember(e => e.Id, opt => opt.Ignore());
         }
     }
 }

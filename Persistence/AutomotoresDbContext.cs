@@ -37,6 +37,8 @@ namespace Automotores.Backend.Persistence
 
         public DbSet<Promocion> Promociones { get; set; }
 
+        public DbSet<Usuario> Usuarios { get; set; }
+
         public AutomotoresDbContext(DbContextOptions<AutomotoresDbContext> options) : base(options)
         {
         }
@@ -69,6 +71,7 @@ namespace Automotores.Backend.Persistence
 
             modelBuilder.Entity<PromocionMercado>().HasKey(vf =>
             new { vf.PromocionId, vf.MercadoId });
+
         }
     }
 }

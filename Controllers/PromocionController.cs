@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Automotores.Backend.Controllers.Resources;
@@ -45,6 +46,50 @@ namespace Automotores.Backend.Controllers
             var result = mapper.Map<Promocion, PromocionResource>(promocion);
 
             return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePromocion(int id, [FromBody] SavePromocionResource promocionResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var promocion = await repository.GetPromocion(id);
+
+            if (promocion == null)
+                return NotFound();
+
+            mapper.Map<SavePromocionResource, Promocion>(promocionResource, promocion);
+
+            promocion.FechaActualizacion = DateTime.Now;
+            promocion.Estado = 1;
+
+            await unitOfWork.CompleteAsync();
+
+            promocion = await repository.GetPromocion(promocion.Id);
+
+            await mailRepository.SendEmail();
+
+            var result = mapper.Map<Promocion, PromocionResource>(promocion);
+
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<PromocionResource> GetPromocion(int id)
+        {
+            var promocion = await repository.GetPromocion(id);
+
+            return mapper.Map<Promocion, PromocionResource>(promocion);
+        }
+
+        [Route("~/api/establecimiento/{id}/promociones")]
+        [HttpGet]
+        public async Task<IEnumerable<PromocionResource>> GetPromociones(int id)
+        {
+            var promociones = await repository.GetPromociones(id);
+
+            return mapper.Map<IEnumerable<Promocion>, IEnumerable<PromocionResource>>(promociones);
         }
     }
 }

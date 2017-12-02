@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Automotores.Backend.Core.Models
@@ -38,6 +40,13 @@ namespace Automotores.Backend.Core.Models
         public Establecimiento Establecimiento { get; set; }
 
         public int EstablecimientoId { get; set; }
+
+        public ICollection<PromocionMercado> Mercado { get; set; }
+
+        public Promocion()
+        {
+            Mercado = new Collection<PromocionMercado>();
+        }
 
     }
 }

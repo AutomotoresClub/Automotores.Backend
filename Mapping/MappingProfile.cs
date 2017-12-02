@@ -54,6 +54,12 @@ namespace Automotores.Backend.Mapping
             .ForMember(em => em.Servicios, opt => opt.MapFrom(e => e.Servicios.Select(es => es.ServicioId)))
             .ForMember(em => em.Horario, opt => opt.MapFrom(e => e.Horario.Select(em => em.DiasSemanaId)));
 
+            CreateMap<Promocion, PromocionResource>()
+            .ForMember(er => er.Mercado, opt => opt.MapFrom(e => e.Mercado.Select(pm => new KeyValuePairResource { Id = pm.Mercado.Id, Nombre = pm.Mercado.Nombre })));
+
+            CreateMap<Promocion, SavePromocionResource>()
+            .ForMember(pm => pm.Mercado, opt => opt.MapFrom(e => e.Mercado.Select(em => em.MercadoId)));
+
             //Api Resource to Domain
 
             CreateMap<SaveEmpresaResource, Empresa>()
@@ -148,6 +154,26 @@ namespace Automotores.Backend.Mapping
                     e.Horario.Add(f);
                 }
 
+            });
+
+            CreateMap<SavePromocionResource, Promocion>()
+            .ForMember(e => e.Id, opt => opt.Ignore())
+            .ForMember(e => e.Mercado, opt => opt.Ignore())
+            .AfterMap((er, e) =>
+            {
+                List<PromocionMercado> mercadoRetirado = e.Mercado.Where(f => !er.Mercado.Contains(f.MercadoId)).ToList();
+                foreach (var f in mercadoRetirado)
+                {
+                    e.Mercado.Remove(f);
+                }
+
+                //Add new features
+                var mercadoAgregado = er.Mercado.Where(id => !e.Mercado.Any(f => f.MercadoId == id)).Select(id => new PromocionMercado { MercadoId = id });
+
+                foreach (var f in mercadoAgregado)
+                {
+                    e.Mercado.Add(f);
+                }
             });
         }
     }

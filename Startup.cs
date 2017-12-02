@@ -37,6 +37,7 @@ namespace Automotores.Backend
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IErrorReporter, SentryErrorReporter>();
             services.AddScoped<IMailRepository, MailRepository>();
+            services.AddScoped<IPromocionRepository, PromocionRepository>();
             services.AddAutoMapper();
             services.AddMvc();
             services.AddDefaultAWSOptions(Configuration.GetAWSOptions());

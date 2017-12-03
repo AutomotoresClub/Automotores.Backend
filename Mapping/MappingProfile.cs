@@ -17,7 +17,10 @@ namespace Automotores.Backend.Mapping
             CreateMap<Mercado, KeyValuePairResource>();
             CreateMap<Servicio, KeyValuePairResource>();
             CreateMap<HorarioEstablecimiento, HorarioResource>();
-
+            CreateMap<ClaseVehiculo, ClaseVehiculoResource>();
+            CreateMap<Marca, KeyValuePairResource>();
+            CreateMap<Linea, KeyValuePairResource>();
+            
             CreateMap<Empresa, EmpresaResource>()
             .ForMember(er => er.Representante, opt => opt.MapFrom(e => new RepresentanteResource { Nombre = e.NombreRepresentante, Identificacion = e.IdentificacionRepresentante }))
             .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => em.MercadoId)))
@@ -64,6 +67,14 @@ namespace Automotores.Backend.Mapping
             .ForMember(vr => vr.Departamento, opt => opt.MapFrom(v => v.Ciudad.Departamento));
 
             CreateMap<Usuario, SaveUsuarioResource>();
+
+            CreateMap<Vehiculo, VehiculoResource>()
+            .ForMember(vr => vr.Departamento, opt => opt.MapFrom(v => v.Ciudad.Departamento))
+            .ForMember(vr => vr.Linea, opt => opt.MapFrom(v => v.Linea.Marca));
+
+            CreateMap<Vehiculo, SaveVehiculoResource>();
+
+
             //Api Resource to Domain
 
             CreateMap<SaveEmpresaResource, Empresa>()
@@ -182,6 +193,9 @@ namespace Automotores.Backend.Mapping
             });
 
             CreateMap<SaveUsuarioResource, Usuario>()
+            .ForMember(e => e.Id, opt => opt.Ignore());
+
+            CreateMap<SaveVehiculoResource, Vehiculo>()
             .ForMember(e => e.Id, opt => opt.Ignore());
         }
     }

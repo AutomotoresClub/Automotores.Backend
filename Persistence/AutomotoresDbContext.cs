@@ -39,6 +39,12 @@ namespace Automotores.Backend.Persistence
 
         public DbSet<Usuario> Usuarios { get; set; }
 
+        public DbSet<ServicioVehiculo> ServicioVehiculo { get; set; }
+
+        public DbSet<ColorVehiculo> ColorVehiculo { get; set; }
+
+        public DbSet<Vehiculo> Vehiculos { get; set; }
+
         public AutomotoresDbContext(DbContextOptions<AutomotoresDbContext> options) : base(options)
         {
         }

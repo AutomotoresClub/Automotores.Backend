@@ -11,9 +11,10 @@ using System;
 namespace Automotores.Backend.Migrations
 {
     [DbContext(typeof(AutomotoresDbContext))]
-    partial class AutomotoresDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171203000210_PopulateColorVehiculo")]
+    partial class PopulateColorVehiculo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -556,59 +557,6 @@ namespace Automotores.Backend.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Automotores.Backend.Core.Models.Vehiculo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CiudadId");
-
-                    b.Property<int>("ColorVehiculoId");
-
-                    b.Property<int>("Estado");
-
-                    b.Property<DateTime?>("FechaActualizacion");
-
-                    b.Property<DateTime>("FechaCreacion");
-
-                    b.Property<string>("Imagen")
-                        .HasMaxLength(255);
-
-                    b.Property<int>("LineaId");
-
-                    b.Property<string>("Modelo")
-                        .IsRequired()
-                        .HasMaxLength(5);
-
-                    b.Property<string>("Placa")
-                        .IsRequired()
-                        .HasMaxLength(8);
-
-                    b.Property<int>("ServicioVehiculoId");
-
-                    b.Property<int>("UsuarioId");
-
-                    b.Property<DateTime>("VigenciaSoat");
-
-                    b.Property<DateTime>("VigenciaTecnomecanica");
-
-                    b.Property<DateTime?>("VigenciaTodoriesgo");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CiudadId");
-
-                    b.HasIndex("ColorVehiculoId");
-
-                    b.HasIndex("LineaId");
-
-                    b.HasIndex("ServicioVehiculoId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("Vehiculos");
-                });
-
             modelBuilder.Entity("Automotores.Backend.Core.Models.Administrador", b =>
                 {
                     b.HasOne("Automotores.Backend.Core.Models.Empresa", "Empresa")
@@ -788,34 +736,6 @@ namespace Automotores.Backend.Migrations
                     b.HasOne("Automotores.Backend.Core.Models.Ciudad", "Ciudad")
                         .WithMany()
                         .HasForeignKey("CiudadId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Automotores.Backend.Core.Models.Vehiculo", b =>
-                {
-                    b.HasOne("Automotores.Backend.Core.Models.Ciudad", "Ciudad")
-                        .WithMany()
-                        .HasForeignKey("CiudadId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.ColorVehiculo", "ColorVehiculo")
-                        .WithMany()
-                        .HasForeignKey("ColorVehiculoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.Linea", "Linea")
-                        .WithMany()
-                        .HasForeignKey("LineaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.ServicioVehiculo", "ServicioVehiculo")
-                        .WithMany()
-                        .HasForeignKey("ServicioVehiculoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -1,0 +1,11 @@
+using System.Threading.Tasks;
+using Automotores.Backend.Core.Models;
+
+namespace Automotores.Backend.Extensions
+{
+    public interface IVehiculoRepository
+    {
+        void Add(Vehiculo vehiculo);
+        Task<Vehiculo> GetVehiculo(int id);
+    }
+}

@@ -26,6 +26,8 @@ namespace Automotores.Backend.Controllers.Resources
 
         public KeyValuePairResource Marca { get; set; }
 
+        public KeyValuePairResource ClaseVehiculo { get; set; }
+
         public KeyValuePairResource ServicioVehiculo { get; set; }
 
         public KeyValuePairResource ColorVehiculo { get; set; }

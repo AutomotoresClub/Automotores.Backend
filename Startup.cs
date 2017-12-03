@@ -6,6 +6,7 @@ using Amazon.SimpleEmail;
 using AutoMapper;
 using Automotores.Backend.Core;
 using Automotores.Backend.Core.Models;
+using Automotores.Backend.Extensions;
 using Automotores.Backend.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +40,7 @@ namespace Automotores.Backend
             services.AddScoped<IMailRepository, MailRepository>();
             services.AddScoped<IPromocionRepository, PromocionRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IVehiculoRepository, VehiculoRepository>();
             services.AddAutoMapper();
             services.AddMvc();
             services.AddDefaultAWSOptions(Configuration.GetAWSOptions());

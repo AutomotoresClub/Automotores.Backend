@@ -62,8 +62,6 @@ namespace Automotores.Backend.Controllers
 
             usuario.FechaActualizacion = DateTime.Now;
 
-            usuario.Estado = 0;
-
             await unitOfWork.CompleteAsync();
 
             usuario = await repository.GetUsuario(usuario.Id);

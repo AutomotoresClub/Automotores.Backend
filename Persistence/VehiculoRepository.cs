@@ -3,6 +3,8 @@ using Automotores.Backend.Core.Models;
 using Automotores.Backend.Core;
 using Microsoft.EntityFrameworkCore;
 using Automotores.Backend.Extensions;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Automotores.Backend.Persistence
 {
@@ -26,7 +28,21 @@ namespace Automotores.Backend.Persistence
                 .ThenInclude(v => v.Departamento)
             .Include(v => v.Linea)
                 .ThenInclude(v => v.Marca)
-            .SingleOrDefaultAsync(e => e.Id == id);
+                .ThenInclude(v => v.ClaseVehiculo)
+            .Include(v => v.ColorVehiculo)
+            .Include(v => v.ServicioVehiculo).SingleOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task<IEnumerable<Vehiculo>> GetVehiculos(int id)
+        {
+            return await context.Vehiculos
+            .Include(v => v.Ciudad)
+                .ThenInclude(v => v.Departamento)
+            .Include(v => v.Linea)
+                .ThenInclude(v => v.Marca)
+                .ThenInclude(v => v.ClaseVehiculo)
+            .Include(v => v.ColorVehiculo)
+            .Include(v => v.ServicioVehiculo).Where(e => e.UsuarioId == id).ToListAsync();
         }
     }
 }

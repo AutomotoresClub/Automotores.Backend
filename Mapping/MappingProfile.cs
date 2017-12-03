@@ -70,7 +70,8 @@ namespace Automotores.Backend.Mapping
 
             CreateMap<Vehiculo, VehiculoResource>()
             .ForMember(vr => vr.Departamento, opt => opt.MapFrom(v => v.Ciudad.Departamento))
-            .ForMember(vr => vr.Linea, opt => opt.MapFrom(v => v.Linea.Marca));
+            .ForMember(vr => vr.Marca, opt => opt.MapFrom(v => v.Linea.Marca))
+            .ForMember(vr => vr.ClaseVehiculo, opt => opt.MapFrom(v => v.Linea.Marca.ClaseVehiculo));
 
             CreateMap<Vehiculo, SaveVehiculoResource>();
 

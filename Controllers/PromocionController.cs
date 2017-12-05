@@ -68,7 +68,7 @@ namespace Automotores.Backend.Controllers
 
             promocion = await repository.GetPromocion(promocion.Id);
 
-            await mailRepository.SendEmail();
+            // await mailRepository.SendEmail();
 
             var result = mapper.Map<Promocion, PromocionResource>(promocion);
 
@@ -85,9 +85,17 @@ namespace Automotores.Backend.Controllers
 
         [Route("~/api/establecimiento/{id}/promociones")]
         [HttpGet]
-        public async Task<IEnumerable<PromocionResource>> GetPromociones(int id)
+        public async Task<IEnumerable<PromocionResource>> GetEstablecimientoPromociones(int id)
         {
             var promociones = await repository.GetPromociones(id);
+
+            return mapper.Map<IEnumerable<Promocion>, IEnumerable<PromocionResource>>(promociones);
+        }
+
+        [HttpGet("{claseVehiculo}/{servicioVehiculo}")]
+        public async Task<IEnumerable<PromocionResource>> GetPromociones(int claseVehiculo, int servicioVehiculo)
+        {
+            var promociones = await repository.GetPromociones(claseVehiculo, servicioVehiculo, true);
 
             return mapper.Map<IEnumerable<Promocion>, IEnumerable<PromocionResource>>(promociones);
         }

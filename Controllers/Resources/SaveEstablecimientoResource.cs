@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using Automotores.Backend.Core.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Automotores.Backend.Controllers.Resources
 {
@@ -21,7 +22,7 @@ namespace Automotores.Backend.Controllers.Resources
 
         public int TipoJornada { get; set; }
 
-        public string Imagen { get; set; }
+        public IFormFile Imagen { get; set; }
 
         public int Estado { get; set; }
 
@@ -38,14 +39,16 @@ namespace Automotores.Backend.Controllers.Resources
 
         public ICollection<int> Servicios { get; set; }
 
-        public ICollection<HorarioResource> Horario { get; set; }
+        public ICollection<HorarioEstablecimiento> Horario { get; set; }
+
+        public ICollection<EstablecimientoServicioEmergencia> ServiciosEmergencia { get; set; }
 
         public SaveEstablecimientoResource()
         {
             Mercado = new Collection<int>();
             Servicios = new Collection<int>();
-            Horario = new Collection<HorarioResource>();
-
+            Horario = new Collection<HorarioEstablecimiento>();
+            ServiciosEmergencia = new Collection<EstablecimientoServicioEmergencia>();
         }
     }
 }

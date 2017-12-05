@@ -29,6 +29,8 @@ namespace Automotores.Backend.Controllers.Resources
 
         public int Estado { get; set; }
 
+        public string Disponibilidad { get; set; }
+
         public ContactoResource Contacto { get; set; }
 
         public GeolocalizacionResource Geolocalizacion { get; set; }

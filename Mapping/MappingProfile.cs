@@ -20,7 +20,7 @@ namespace Automotores.Backend.Mapping
             CreateMap<ClaseVehiculo, ClaseVehiculoResource>();
             CreateMap<Marca, KeyValuePairResource>();
             CreateMap<Linea, KeyValuePairResource>();
-            
+
             CreateMap<Empresa, EmpresaResource>()
             .ForMember(er => er.Representante, opt => opt.MapFrom(e => new RepresentanteResource { Nombre = e.NombreRepresentante, Identificacion = e.IdentificacionRepresentante }))
             .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => em.MercadoId)))
@@ -42,12 +42,13 @@ namespace Automotores.Backend.Mapping
             .ForMember(er => er.Mercado, opt => opt.MapFrom(e => e.Mercado.Select(em => new KeyValuePairResource { Id = em.Mercado.Id, Nombre = em.Mercado.Nombre })))
             .ForMember(em => em.Horario, opt => opt.MapFrom(e => e.Horario.Select(em => new HorarioResource
             {
-                JornadaMañana = em.JornadaMañana,
-                SubJornadaMañana = em.SubJornadaMañana,
-                JornadaTarde = em.JornadaTarde,
-                SubJornadaTarde = em.SubJornadaTarde,
-                Nombre = em.DiasSemana.Nombre,
-                Id = em.DiasSemana.Id
+                JornadaMañana = em.JornadaMañana.ToString("HH:mm"),
+                SubJornadaMañana = em.SubJornadaMañana.GetValueOrDefault().ToString("HH:mm"),
+                JornadaTarde = em.JornadaTarde.ToString("HH:mm"),
+                SubJornadaTarde = em.SubJornadaTarde.GetValueOrDefault().ToString("HH:mm"),
+                NombreDia = em.DiasSemana.Nombre,
+                CodigoDia = em.DiasSemana.Id,
+                Disponibilidad = (em.JornadaMañana < DateTime.Now || em.JornadaTarde < DateTime.Now || em.SubJornadaMañana < DateTime.Now || em.SubJornadaTarde < DateTime.Now) ? "CERRADO" : "ABIERTO"
             })));
 
             CreateMap<Establecimiento, SaveEstablecimientoResource>()
@@ -156,7 +157,7 @@ namespace Automotores.Backend.Mapping
             .AfterMap((er, e) =>
             {
 
-                List<HorarioEstablecimiento> horarioRetirados = e.Horario.Where(h => !er.Horario.Any(f => f.Id == h.DiasSemanaId)).ToList();
+                List<HorarioEstablecimiento> horarioRetirados = e.Horario.Where(h => !er.Horario.Any(f => f.DiasSemanaId == h.DiasSemanaId)).ToList();
 
                 foreach (var h in horarioRetirados)
                 {
@@ -164,14 +165,34 @@ namespace Automotores.Backend.Mapping
                 }
 
                 //Add new features
-                var servicioAgregado = er.Horario.Where(horario => !e.Horario.Any(h => h.DiasSemanaId == horario.Id)).Select(horario => new HorarioEstablecimiento { DiasSemanaId = horario.Id, JornadaMañana = horario.JornadaMañana, JornadaTarde = horario.JornadaTarde, SubJornadaMañana = horario.SubJornadaMañana, SubJornadaTarde = horario.SubJornadaTarde });
+                var servicioAgregado = er.Horario.Where(horario => !e.Horario.Any(h => h.DiasSemanaId == horario.DiasSemanaId)).Select(horario => new HorarioEstablecimiento { DiasSemanaId = horario.DiasSemanaId, JornadaMañana = horario.JornadaMañana, JornadaTarde = horario.JornadaTarde, SubJornadaMañana = horario.SubJornadaMañana, SubJornadaTarde = horario.SubJornadaTarde });
 
                 foreach (var f in servicioAgregado)
                 {
                     e.Horario.Add(f);
                 }
 
-            });
+            })
+            .ForMember(e => e.Horario, opt => opt.Ignore())
+            .AfterMap((er, e) =>
+            {
+
+                List<EstablecimientoServicioEmergencia> serviciosRetirados = e.ServiciosEmergencia.Where(s => !er.ServiciosEmergencia.Any(sr => sr.ServicioEmergenciId == s.ServicioEmergenciId)).ToList();
+
+                foreach (var s in serviciosRetirados)
+                {
+                    e.ServiciosEmergencia.Remove(s);
+                }
+
+                //Add new features
+                var servicioAgregado = er.ServiciosEmergencia.Where(servicio => !e.ServiciosEmergencia.Any(s => s.ServicioEmergenciId == servicio.ServicioEmergenciId)).Select(servicio => new EstablecimientoServicioEmergencia { ServicioEmergenciId = servicio.ServicioEmergenciId, Telefono = servicio.Telefono });
+
+                foreach (var s in servicioAgregado)
+                {
+                    e.ServiciosEmergencia.Add(s);
+                }
+
+            }); ;
 
             CreateMap<SavePromocionResource, Promocion>()
             .ForMember(e => e.Id, opt => opt.Ignore())
@@ -197,7 +218,8 @@ namespace Automotores.Backend.Mapping
             .ForMember(e => e.Id, opt => opt.Ignore());
 
             CreateMap<SaveVehiculoResource, Vehiculo>()
-            .ForMember(e => e.Id, opt => opt.Ignore());
+            .ForMember(e => e.Id, opt => opt.Ignore())
+            .ForMember(e => e.Imagen, opt => opt.Ignore());
         }
     }
 }

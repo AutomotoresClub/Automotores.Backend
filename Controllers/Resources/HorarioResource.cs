@@ -5,17 +5,19 @@ namespace Automotores.Backend.Controllers.Resources
 {
     public class HorarioResource
     {
-        public int Id { get; set; }
-        
-        public string Nombre { get; set; }
+        public int CodigoDia { get; set; }
 
-        public DateTime JornadaMañana { get; set; }
+        public string NombreDia { get; set; }
 
-        public DateTime? SubJornadaMañana { get; set; }
+        public string JornadaMañana { get; set; }
 
-        public DateTime JornadaTarde { get; set; }
+        public string SubJornadaMañana { get; set; }
 
-        public DateTime? SubJornadaTarde { get; set; }
+        public string JornadaTarde { get; set; }
+
+        public string SubJornadaTarde { get; set; }
+
+        public string Disponibilidad { get; set; }
 
     }
 }

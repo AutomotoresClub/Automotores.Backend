@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Automotores.Backend.Controllers.Resources
 {
@@ -10,7 +11,7 @@ namespace Automotores.Backend.Controllers.Resources
 
         public string Modelo { get; set; }
 
-        public string Imagen { get; set; }
+        public IFormFile Imagen { get; set; }
 
         public DateTime VigenciaTecnomecanica { get; set; }
 

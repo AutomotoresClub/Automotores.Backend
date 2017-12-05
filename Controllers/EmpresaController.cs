@@ -65,7 +65,7 @@ namespace Automotores.Backend.Controllers
 
             empresa = await repository.GetEmpresa(empresa.Id);
 
-            await mailRepository.SendEmail();
+            // await mailRepository.SendEmail();
 
             var result = mapper.Map<Empresa, EmpresaResource>(empresa);
 

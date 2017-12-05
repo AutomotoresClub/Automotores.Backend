@@ -10,7 +10,8 @@ namespace Automotores.Backend.Core
 
         Task<Establecimiento> GetEstablecimiento(int id);
 
-        Task<IEnumerable<Establecimiento>> GetEstablecimientos(int id);
+        Task<IEnumerable<Establecimiento>> GetEstablecimientos(int param, int optionalParam = 0, bool filter = false);
 
+        Task<IEnumerable<Establecimiento>> GetEstablecimientosEmergencia(int idServicioEmergencia);
     }
 }

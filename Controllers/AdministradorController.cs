@@ -66,7 +66,7 @@ namespace Automotores.Backend.Controllers
 
             administrador = await repository.GetAdministrador(administrador.Id);
 
-            await mailRepository.SendEmail();
+            // await mailRepository.SendEmail();
 
             var result = mapper.Map<Administrador, AdministradorResource>(administrador);
 

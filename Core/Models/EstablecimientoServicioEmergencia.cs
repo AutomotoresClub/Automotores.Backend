@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Automotores.Backend.Core.Models
 {
     public class EstablecimientoServicioEmergencia
@@ -5,6 +7,9 @@ namespace Automotores.Backend.Core.Models
         public int EstablecimientoId { get; set; }
 
         public int ServicioEmergenciId { get; set; }
+
+        [StringLength(11)]
+        public string Telefono { get; set; }
 
         public Establecimiento Establecimiento { get; set; }
 

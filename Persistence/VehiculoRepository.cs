@@ -44,5 +44,10 @@ namespace Automotores.Backend.Persistence
             .Include(v => v.ColorVehiculo)
             .Include(v => v.ServicioVehiculo).Where(e => e.UsuarioId == id).ToListAsync();
         }
+
+        public void Remove(Vehiculo vehiculo)
+        {
+            context.Remove(vehiculo);
+        }
     }
 }

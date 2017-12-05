@@ -10,6 +10,6 @@ namespace Automotores.Backend.Core
 
         Task<Promocion> GetPromocion(int id);
 
-        Task<IEnumerable<Promocion>> GetPromociones(int id);
+        Task<IEnumerable<Promocion>> GetPromociones(int param, int optionalParam = 0, bool filter = false);
     }
 }

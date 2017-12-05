@@ -68,7 +68,7 @@ namespace Automotores.Backend.Controllers
 
             establecimiento = await repository.GetEstablecimiento(establecimiento.Id);
 
-            await mailRepository.SendEmail();
+            // await mailRepository.SendEmail();
 
             var result = mapper.Map<Establecimiento, EstablecimientoResource>(establecimiento);
 
@@ -85,11 +85,28 @@ namespace Automotores.Backend.Controllers
 
         [Route("~/api/administrador/{id}/establecimientos")]
         [HttpGet]
-        public async Task<IEnumerable<EstablecimientoResource>> GetEstablecimientos(int id)
+        public async Task<IEnumerable<EstablecimientoResource>> GetAdministradorEstablecimientos(int id)
         {
             var establecimientos = await repository.GetEstablecimientos(id);
 
             return mapper.Map<IEnumerable<Establecimiento>, IEnumerable<EstablecimientoResource>>(establecimientos);
         }
+
+        [HttpGet("{claseVehiculo}/{servicioVehiculo}")]
+        public async Task<IEnumerable<EstablecimientoResource>> GetEstablecimientos(int claseVehiculo, int servicioVehiculo)
+        {
+            var establecimientos = await repository.GetEstablecimientos(claseVehiculo, servicioVehiculo, false);
+
+            return mapper.Map<IEnumerable<Establecimiento>, IEnumerable<EstablecimientoResource>>(establecimientos);
+        }
+
+        [HttpGet("/emergencia/{idServicio}")]
+        public async Task<IEnumerable<EstablecimientoResource>> GetEstablecimientoEmergencia(int idServicio)
+        {
+            var establecimientos = await repository.GetEstablecimientosEmergencia(idServicio);
+
+            return mapper.Map<IEnumerable<Establecimiento>, IEnumerable<EstablecimientoResource>>(establecimientos);
+        }
+
     }
 }

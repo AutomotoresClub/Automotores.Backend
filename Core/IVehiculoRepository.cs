@@ -9,5 +9,6 @@ namespace Automotores.Backend.Extensions
         void Add(Vehiculo vehiculo);
         Task<Vehiculo> GetVehiculo(int id);
         Task<IEnumerable<Vehiculo>> GetVehiculos(int id);
+        void Remove(Vehiculo vehiculo);
     }
 }

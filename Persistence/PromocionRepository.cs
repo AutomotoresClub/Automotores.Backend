@@ -29,13 +29,30 @@ namespace Automotores.Backend.Persistence
             .SingleOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<IEnumerable<Promocion>> GetPromociones(int id)
+        public async Task<IEnumerable<Promocion>> GetPromociones(int param, int optionalParam = 0, bool filter = false)
         {
-            return await context.Promociones
-            .Include(e => e.Servicio)
-            .Include(e => e.Mercado)
-                .ThenInclude(es => es.Mercado)
-            .Where(e => e.EstablecimientoId == id).ToListAsync();
+            if (!filter)
+            {
+                return await context.Promociones
+                .Include(e => e.Servicio)
+                .Include(e => e.Mercado)
+                    .ThenInclude(es => es.Mercado)
+                .Where(e => e.EstablecimientoId == param).ToListAsync();
+            }
+            else
+            {
+                var claseVehiculo = param;
+                var servicioVehiculo = optionalParam;
+
+                return await context.Promociones
+                .Include(e => e.Servicio)
+                .Include(e => e.Mercado)
+                  .ThenInclude(es => es.Mercado)
+                .Where(e => e.Mercado.Any(f => f.Mercado.ClaseVehiculos.Any(c => c.Id == claseVehiculo)))
+                .Where(e => e.ServicioId == servicioVehiculo)
+                .ToListAsync();
+
+            }
         }
     }
 }

@@ -6,30 +6,54 @@ using Automotores.Backend.Controllers.Resources;
 using Automotores.Backend.Core;
 using Automotores.Backend.Core.Models;
 using Automotores.Backend.Extensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Automotores.Backend.Controllers
 {
-    [Route("/api/vehiculo")]
+    [Route("/api/vehiculos")]
     public class VehiculoController : Controller
     {
         private readonly IMapper mapper;
         private readonly IVehiculoRepository repository;
         private readonly IUnitOfWork unitOfWork;
-        public VehiculoController(IMapper mapper, IVehiculoRepository repository, IUnitOfWork unitOfWork)
+        private readonly FotosConfiguracion fotoConfiguracion;
+        private readonly IUploadService uploadService;
+        private readonly IMailService mailService;
+
+        public VehiculoController(IMapper mapper, IVehiculoRepository repository, IUnitOfWork unitOfWork, IUploadService uploadService, IMailService mailService, IOptionsSnapshot<FotosConfiguracion> options)
         {
+            this.mailService = mailService;
+            this.uploadService = uploadService;
             this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.mapper = mapper;
+            this.fotoConfiguracion = options.Value;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateVehiculo([FromBody] SaveVehiculoResource vehiculoResource)
+
+        public async Task<IActionResult> CreateVehiculo(SaveVehiculoResource vehiculoResource)
         {
+            var archivoExiste = false;
+            var imagen = vehiculoResource.Imagen;
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (imagen != null)
+            {
+                if (imagen.Length == 0) return BadRequest("Archivo vacio");
+                if (imagen.Length > this.fotoConfiguracion.MaxBytes) return BadRequest("Peso del archivo excedido");
+                if (!fotoConfiguracion.IsSuported(imagen.FileName)) return BadRequest("El tipo del archivo no es valido");
+
+                archivoExiste = true;
+            }
+
             var vehiculo = mapper.Map<SaveVehiculoResource, Vehiculo>(vehiculoResource);
+
+            vehiculo.Imagen = (archivoExiste) ? await uploadService.UploadFile(imagen, "ac-automotor") : null;
 
             vehiculo.Estado = 0;
 
@@ -47,10 +71,24 @@ namespace Automotores.Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVehiculo(int id, [FromBody] SaveVehiculoResource vehiculoResource)
+        public async Task<IActionResult> UpdateVehiculo(int id, SaveVehiculoResource vehiculoResource)
         {
+            var archivoExiste = false;
+            var cadena = "";
+            var imagenNueva = vehiculoResource.Imagen;
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (imagenNueva != null)
+            {
+                if (imagenNueva.Length == 0) return BadRequest("Archivo vacio");
+                if (imagenNueva.Length > this.fotoConfiguracion.MaxBytes) return BadRequest("Peso del archivo excedido");
+                if (!fotoConfiguracion.IsSuported(imagenNueva.FileName)) return BadRequest("El tipo del archivo no es valido");
+
+                archivoExiste = true;
+                cadena = "no valida bien";
+            }
 
             var vehiculo = await repository.GetVehiculo(id);
 
@@ -58,6 +96,11 @@ namespace Automotores.Backend.Controllers
                 return NotFound();
 
             vehiculo = mapper.Map<SaveVehiculoResource, Vehiculo>(vehiculoResource, vehiculo);
+
+            if(archivoExiste) 
+                vehiculo.Imagen = await uploadService.UploadFile(imagenNueva, "ac-automotor");
+            else
+                vehiculo.Imagen = vehiculo.Imagen;
 
             vehiculo.FechaActualizacion = DateTime.Now;
 
@@ -85,6 +128,21 @@ namespace Automotores.Backend.Controllers
             var vehiculos = await repository.GetVehiculos(id);
 
             return mapper.Map<IEnumerable<Vehiculo>, IEnumerable<VehiculoResource>>(vehiculos);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVehiculo(int id)
+        {
+            var vehiculo = await repository.GetVehiculo(id);
+
+            if (vehiculo == null)
+                return NotFound();
+
+            repository.Remove(vehiculo);
+
+            await unitOfWork.CompleteAsync();
+
+            return Ok(id);
         }
     }
 }

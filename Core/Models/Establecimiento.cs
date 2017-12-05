@@ -66,11 +66,15 @@ namespace Automotores.Backend.Core.Models
 
         public ICollection<HorarioEstablecimiento> Horario { get; set; }
 
+        public ICollection<EstablecimientoServicioEmergencia> ServiciosEmergencia { get; set; }
+
         public Establecimiento()
         {
             Servicios = new Collection<EstablecimientoServicio>();
             Mercado = new Collection<EstablecimientoMercado>();
             Horario = new Collection<HorarioEstablecimiento>();
+            ServiciosEmergencia = new Collection<EstablecimientoServicioEmergencia>();
+
         }
 
     }

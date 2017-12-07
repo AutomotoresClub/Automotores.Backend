@@ -1,10 +1,11 @@
 using Automotores.Backend.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Automotores.Backend.Persistence
 {
 
-    public class AutomotoresDbContext : DbContext
+    public class AutomotoresDbContext : IdentityDbContext<User>
     {
 
         public DbSet<Departamento> Departamentos { get; set; }
@@ -56,6 +57,7 @@ namespace Automotores.Backend.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<EmpresaMercado>().HasKey(vf =>
             new { vf.EmpresaId, vf.MercadoId });

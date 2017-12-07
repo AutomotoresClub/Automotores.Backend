@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Automotores.Backend.Controllers.Resources
 {
     public class SaveAdministradorResource
@@ -8,8 +10,11 @@ namespace Automotores.Backend.Controllers.Resources
 
         public string Telefono { get; set; }
 
-        public string Email { get; set; }
-
         public int EmpresaId { get; set; }
+
+        [Required]
+        public UserResource User { get; set; }
+
+
     }
 }

@@ -11,9 +11,10 @@ using System;
 namespace Automotores.Backend.Migrations
 {
     [DbContext(typeof(AutomotoresDbContext))]
-    partial class AutomotoresDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171205225650_ModifyUsuario")]
+    partial class ModifyUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,6 +25,10 @@ namespace Automotores.Backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.Property<int>("EmpresaId");
 
@@ -37,17 +42,16 @@ namespace Automotores.Backend.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
+                    b.Property<string>("Password")
+                        .HasMaxLength(16);
+
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasMaxLength(15);
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EmpresaId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Administradores");
                 });
@@ -145,6 +149,9 @@ namespace Automotores.Backend.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("Email")
+                        .IsRequired();
+
                     b.Property<int>("Estado");
 
                     b.Property<DateTime>("FechaActualizacion");
@@ -165,6 +172,10 @@ namespace Automotores.Backend.Migrations
 
                     b.Property<int>("NumeroEstablecimientos");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(16);
+
                     b.Property<string>("RazonSocial")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -183,8 +194,6 @@ namespace Automotores.Backend.Migrations
 
                     b.Property<int>("TipoDocumentoId");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CiudadId");
@@ -192,8 +201,6 @@ namespace Automotores.Backend.Migrations
                     b.HasIndex("RegimenId");
 
                     b.HasIndex("TipoDocumentoId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Empresas");
                 });
@@ -588,13 +595,15 @@ namespace Automotores.Backend.Migrations
                         .IsRequired()
                         .HasMaxLength(55);
 
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CiudadId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Usuarios");
                 });
@@ -765,10 +774,6 @@ namespace Automotores.Backend.Migrations
                         .WithMany("Administradores")
                         .HasForeignKey("EmpresaId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Automotores.Backend.Core.Models.Ciudad", b =>
@@ -803,10 +808,6 @@ namespace Automotores.Backend.Migrations
                         .WithMany()
                         .HasForeignKey("TipoDocumentoId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Automotores.Backend.Core.Models.EmpresaMercado", b =>
@@ -950,7 +951,7 @@ namespace Automotores.Backend.Migrations
 
                     b.HasOne("Automotores.Backend.Core.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Automotores.Backend.Core.Models.Vehiculo", b =>

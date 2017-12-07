@@ -6,10 +6,6 @@ namespace Automotores.Backend.Controllers.Resources
     {
         public int Id { get; set; }
 
-        public string Correo { get; set; }
-
-        public string Contraseña { get; set; }
-
         public string Nombre { get; set; }
 
         public string Apellido { get; set; }
@@ -21,6 +17,8 @@ namespace Automotores.Backend.Controllers.Resources
         public KeyValuePairResource Ciudad { get; set; }
 
         public KeyValuePairResource Departamento { get; set; }
+
+        public string Correo { get; set; }
 
     }
 }

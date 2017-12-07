@@ -17,14 +17,6 @@ namespace Automotores.Backend.Core.Models
         [StringLength(15)]
         public string Telefono { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        [EmailAddress(ErrorMessage = "Email invalido")]
-        public string Email { get; set; }
-
-        [StringLength(16)]
-        public string Password { get; set; }
-
         public int Estado { get; set; }
 
         public DateTime FechaCreacion { get; set; }
@@ -34,6 +26,10 @@ namespace Automotores.Backend.Core.Models
         public Empresa Empresa { get; set; }
 
         public int EmpresaId { get; set; }
+
+        public User User { get; set; }
+
+        public string UserId { get; set; }
 
         public ICollection<Establecimiento> Establecimientos { get; set; }
 

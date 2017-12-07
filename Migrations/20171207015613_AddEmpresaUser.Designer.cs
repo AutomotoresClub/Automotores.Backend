@@ -11,9 +11,10 @@ using System;
 namespace Automotores.Backend.Migrations
 {
     [DbContext(typeof(AutomotoresDbContext))]
-    partial class AutomotoresDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171207015613_AddEmpresaUser")]
+    partial class AddEmpresaUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,6 +25,10 @@ namespace Automotores.Backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.Property<int>("EmpresaId");
 
@@ -37,17 +42,16 @@ namespace Automotores.Backend.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
+                    b.Property<string>("Password")
+                        .HasMaxLength(16);
+
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasMaxLength(15);
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EmpresaId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Administradores");
                 });
@@ -765,10 +769,6 @@ namespace Automotores.Backend.Migrations
                         .WithMany("Administradores")
                         .HasForeignKey("EmpresaId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Automotores.Backend.Core.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Automotores.Backend.Core.Models.Ciudad", b =>

@@ -16,10 +16,10 @@ namespace Automotores.Backend.Controllers
         private readonly IMapper mapper;
         private readonly IAdministradorRepository repository;
         private readonly IUnitOfWork unitOfWork;
-        private readonly IMailRepository mailRepository;
-        public AdministradorController(AutomotoresDbContext context, IMapper mapper, IAdministradorRepository repository, IUnitOfWork unitOfWork, IMailRepository mailRepository)
+        private readonly IIdentityService identityService;
+        public AdministradorController(AutomotoresDbContext context, IMapper mapper, IAdministradorRepository repository, IUnitOfWork unitOfWork, IMailService mailService, IIdentityService identityService)
         {
-            this.mailRepository = mailRepository;
+            this.identityService = identityService;
             this.unitOfWork = unitOfWork;
             this.repository = repository;
             this.mapper = mapper;
@@ -28,8 +28,24 @@ namespace Automotores.Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAdministrador([FromBody] SaveAdministradorResource administradorResource)
         {
+            administradorResource.User.Rol = "AdministradorEmpresa";
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (await identityService.ValidateUser(administradorResource.User.Email, administradorResource.User.Rol))
+            {
+                ModelState.AddModelError("User.email", "El correo ya esta registrado");
+                return BadRequest(ModelState);
+            }
+
+            var userId = await identityService.Register(administradorResource.User);
+
+            if (userId == "")
+            {
+                ModelState.AddModelError("User", "Hubo un error al crear el usuario");
+                return BadRequest(ModelState);
+            }
 
             var administrador = mapper.Map<SaveAdministradorResource, Administrador>(administradorResource);
 
@@ -45,7 +61,6 @@ namespace Automotores.Backend.Controllers
 
             return Ok(result);
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAdministrador(int id, [FromBody] SaveAdministradorResource administradorResource)

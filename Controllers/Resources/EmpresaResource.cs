@@ -14,17 +14,11 @@ namespace Automotores.Backend.Controllers.Resources
 
         public string Direccion { get; set; }
 
-        public string Email { get; set; }
-
         public string Telefono { get; set; }
-
-        public string Password { get; set; }
 
         public int CodigoVerificacion { get; set; }
 
         public int NumeroEstablecimientos { get; set; }
-
-        public int Estado { get; set; }
 
         public string Rut { get; set; }
 
@@ -33,6 +27,8 @@ namespace Automotores.Backend.Controllers.Resources
         public string SitioWeb { get; set; }
 
         public string ComentariosAdmin { get; set; }
+
+        public string Email { get; set; }
 
         public DateTime FechaCreacion { get; set; }
 

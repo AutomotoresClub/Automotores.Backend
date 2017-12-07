@@ -32,16 +32,8 @@ namespace Automotores.Backend.Core.Models
         public string IdentificacionRepresentante { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessage = "Email invalido")]
-        public string Email { get; set; }
-
-        [Required]
         [StringLength(15)]
         public string Telefono { get; set; }
-
-        [Required]
-        [StringLength(16)]
-        public string Password { get; set; }
 
         [Required]
         [Range(1, 2, ErrorMessage = "El código de verificación debe ser 1")]
@@ -82,6 +74,10 @@ namespace Automotores.Backend.Core.Models
         public TipoDocumento TipoDocumento { get; set; }
 
         public int TipoDocumentoId { get; set; }
+
+        public User User { get; set; }
+
+        public string UserId { get; set; }
 
         public ICollection<EmpresaMercado> MercadoObjetivo { get; set; }
 

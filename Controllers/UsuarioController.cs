@@ -15,9 +15,11 @@ namespace Automotores.Backend.Controllers
         private readonly IUsuarioRepository repository;
         private readonly IMailRepository mailRepository;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IIdentityService identityService;
 
-        public UsuarioController(IMapper mapper, IUsuarioRepository repository, IMailRepository mailRepository, IUnitOfWork unitOfWork)
+        public UsuarioController(IMapper mapper, IUsuarioRepository repository, IMailRepository mailRepository, IUnitOfWork unitOfWork, IIdentityService identityService)
         {
+            this.identityService = identityService;
             this.unitOfWork = unitOfWork;
             this.mailRepository = mailRepository;
             this.mapper = mapper;
@@ -27,10 +29,28 @@ namespace Automotores.Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUsuario([FromBody] SaveUsuarioResource usuarioResource)
         {
+            usuarioResource.User.Rol = "UsuarioAplicacionMovil";
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (await identityService.ValidateUser(usuarioResource.User.Email, usuarioResource.User.Rol))
+            {
+                ModelState.AddModelError("User.email", "El correo ya esta registrado");
+                return BadRequest(ModelState);
+            }
+
+            var user = await identityService.Register(usuarioResource.User);
+
+            if (user == "")
+            {
+                ModelState.AddModelError("User", "Hubo un error al crear el usuario");
+                return BadRequest(ModelState);
+            }
+
             var usuario = mapper.Map<SaveUsuarioResource, Usuario>(usuarioResource);
+
+            usuario.UserId = user;
 
             usuario.FechaCreacion = DateTime.Now;
 
@@ -78,5 +98,6 @@ namespace Automotores.Backend.Controllers
 
             return mapper.Map<Usuario, UsuarioResource>(usuario);
         }
+
     }
 }

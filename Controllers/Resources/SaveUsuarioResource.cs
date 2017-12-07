@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata;
 
 namespace Automotores.Backend.Controllers.Resources
@@ -6,10 +7,6 @@ namespace Automotores.Backend.Controllers.Resources
     public class SaveUsuarioResource
     {
         public int Id { get; set; }
-
-        public string Correo { get; set; }
-
-        public string Contraseña { get; set; }
 
         public string Nombre { get; set; }
 
@@ -22,5 +19,8 @@ namespace Automotores.Backend.Controllers.Resources
         public Blob? DatosEmergencia { get; set; }
 
         public int CiudadId { get; set; }
+
+        [Required]
+        public UserResource User { get; set; }
     }
 }

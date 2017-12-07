@@ -15,11 +15,7 @@ namespace Automotores.Backend.Controllers.Resources
 
         public string Direccion { get; set; }
 
-        public string Email { get; set; }
-
         public string Telefono { get; set; }
-
-        public string Password { get; set; }
 
         public int CodigoVerificacion { get; set; }
 
@@ -39,6 +35,9 @@ namespace Automotores.Backend.Controllers.Resources
 
         [Required]
         public RepresentanteResource Representante { get; set; }
+
+        [Required]
+        public UserResource User { get; set; }
 
         public ICollection<int> MercadoObjetivo { get; set; }
 

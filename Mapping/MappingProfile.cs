@@ -25,14 +25,17 @@ namespace Automotores.Backend.Mapping
             .ForMember(er => er.Representante, opt => opt.MapFrom(e => new RepresentanteResource { Nombre = e.NombreRepresentante, Identificacion = e.IdentificacionRepresentante }))
             .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => em.MercadoId)))
             .ForMember(er => er.EmpresaServicios, opt => opt.MapFrom(e => e.EmpresaServicios.Select(es => new KeyValuePairResource { Id = es.Servicio.Id, Nombre = es.Servicio.Nombre })))
-            .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => new KeyValuePairResource { Id = em.Mercado.Id, Nombre = em.Mercado.Nombre })));
+            .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => new KeyValuePairResource { Id = em.Mercado.Id, Nombre = em.Mercado.Nombre })))
+            .ForMember(vr => vr.Email, opt => opt.MapFrom(v => v.User.Email)); 
 
             CreateMap<Empresa, SaveEmpresaResource>()
             .ForMember(er => er.Representante, opt => opt.MapFrom(e => new RepresentanteResource { Nombre = e.NombreRepresentante, Identificacion = e.IdentificacionRepresentante }))
             .ForMember(er => er.MercadoObjetivo, opt => opt.MapFrom(e => e.MercadoObjetivo.Select(em => em.MercadoId)))
             .ForMember(er => er.EmpresaServicios, opt => opt.MapFrom(e => e.EmpresaServicios.Select(es => es.ServicioId)));
 
-            CreateMap<Administrador, AdministradorResource>();
+            CreateMap<Administrador, AdministradorResource>()
+            .ForMember(vr => vr.Email, opt => opt.MapFrom(v => v.User.Email));
+
             CreateMap<Administrador, SaveAdministradorResource>();
 
             CreateMap<Establecimiento, EstablecimientoResource>()
@@ -65,7 +68,8 @@ namespace Automotores.Backend.Mapping
             .ForMember(pm => pm.Mercado, opt => opt.MapFrom(e => e.Mercado.Select(em => em.MercadoId)));
 
             CreateMap<Usuario, UsuarioResource>()
-            .ForMember(vr => vr.Departamento, opt => opt.MapFrom(v => v.Ciudad.Departamento));
+            .ForMember(vr => vr.Departamento, opt => opt.MapFrom(v => v.Ciudad.Departamento))
+            .ForMember(vr => vr.Correo, opt => opt.MapFrom(v => v.User.Email));
 
             CreateMap<Usuario, SaveUsuarioResource>();
 
@@ -76,11 +80,11 @@ namespace Automotores.Backend.Mapping
 
             CreateMap<Vehiculo, SaveVehiculoResource>();
 
-
             //Api Resource to Domain
 
             CreateMap<SaveEmpresaResource, Empresa>()
             .ForMember(e => e.Id, opt => opt.Ignore())
+            .ForMember(e => e.User, opt => opt.Ignore())
             .ForMember(e => e.NombreRepresentante, opt => opt.MapFrom(er => er.Representante.Nombre))
             .ForMember(e => e.IdentificacionRepresentante, opt => opt.MapFrom(er => er.Representante.Identificacion))
             .ForMember(e => e.MercadoObjetivo, opt => opt.Ignore())
@@ -115,7 +119,8 @@ namespace Automotores.Backend.Mapping
             });
 
             CreateMap<SaveAdministradorResource, Administrador>()
-            .ForMember(e => e.Id, opt => opt.Ignore());
+            .ForMember(e => e.Id, opt => opt.Ignore())
+            .ForMember(e => e.User, opt => opt.Ignore());
 
             CreateMap<SaveEstablecimientoResource, Establecimiento>()
             .ForMember(e => e.Id, opt => opt.Ignore())
@@ -215,7 +220,8 @@ namespace Automotores.Backend.Mapping
             });
 
             CreateMap<SaveUsuarioResource, Usuario>()
-            .ForMember(e => e.Id, opt => opt.Ignore());
+            .ForMember(e => e.Id, opt => opt.Ignore())
+            .ForMember(e => e.User, opt => opt.Ignore());
 
             CreateMap<SaveVehiculoResource, Vehiculo>()
             .ForMember(e => e.Id, opt => opt.Ignore())

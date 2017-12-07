@@ -23,6 +23,7 @@ namespace Automotores.Backend.Persistence
             .Include(e => e.Ciudad)
             .Include(e => e.Regimen)
             .Include(e => e.TipoDocumento)
+            .Include(e => e.User)
             .SingleOrDefaultAsync(e => e.Id == id);
         }
 

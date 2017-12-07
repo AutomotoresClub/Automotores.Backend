@@ -24,6 +24,7 @@ namespace Automotores.Backend.Persistence
             return await context.Usuarios
             .Include(e => e.Ciudad)
                 .ThenInclude(d => d.Departamento)
+            .Include(e => e.User)
             .SingleOrDefaultAsync(e => e.Id == id);
         }
     }

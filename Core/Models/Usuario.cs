@@ -11,14 +11,6 @@ namespace Automotores.Backend.Core.Models
 
         [Required]
         [StringLength(55)]
-        public string Correo { get; set; }
-
-        [Required]
-        [StringLength(16)]
-        public string Contraseña { get; set; }
-
-        [Required]
-        [StringLength(55)]
         public string Nombre { get; set; }
 
         [Required]
@@ -42,6 +34,10 @@ namespace Automotores.Backend.Core.Models
         public Ciudad Ciudad { get; set; }
 
         public int CiudadId { get; set; }
+
+        public User User { get; set; }
+
+        public string UserId { get; set; }
 
     }
 }

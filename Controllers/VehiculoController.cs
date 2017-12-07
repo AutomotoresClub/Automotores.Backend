@@ -74,7 +74,6 @@ namespace Automotores.Backend.Controllers
         public async Task<IActionResult> UpdateVehiculo(int id, SaveVehiculoResource vehiculoResource)
         {
             var archivoExiste = false;
-            var cadena = "";
             var imagenNueva = vehiculoResource.Imagen;
 
             if (!ModelState.IsValid)
@@ -87,7 +86,6 @@ namespace Automotores.Backend.Controllers
                 if (!fotoConfiguracion.IsSuported(imagenNueva.FileName)) return BadRequest("El tipo del archivo no es valido");
 
                 archivoExiste = true;
-                cadena = "no valida bien";
             }
 
             var vehiculo = await repository.GetVehiculo(id);

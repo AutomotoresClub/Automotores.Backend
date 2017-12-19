@@ -1,10 +1,16 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Automotores.Backend.Controllers.Resources;
 using Automotores.Backend.Core.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Automotores.Backend.Core.Services
 {
@@ -16,11 +22,11 @@ namespace Automotores.Backend.Core.Services
         private readonly ILogger<IdentiyService> logger;
         private readonly IServiceProvider serviceProvider;
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly IErrorReporter reporter;
+        private readonly IErrorReporter errorReporter;
 
-        public IdentiyService(UserManager<User> userManager, SignInManager<User> signInManager, IPasswordHasher<User> passwordHasher, ILogger<IdentiyService> logger, IServiceProvider serviceProvider, RoleManager<IdentityRole> roleManager, IErrorReporter reporter)
+        public IdentiyService(UserManager<User> userManager, SignInManager<User> signInManager, IPasswordHasher<User> passwordHasher, ILogger<IdentiyService> logger, IServiceProvider serviceProvider, RoleManager<IdentityRole> roleManager, IErrorReporter errorReporter)
         {
-            this.reporter = reporter;
+            this.errorReporter = errorReporter;
             this.serviceProvider = serviceProvider;
             this.logger = logger;
             this.passwordHasher = passwordHasher;
@@ -50,7 +56,7 @@ namespace Automotores.Backend.Core.Services
             }
             catch (Exception ex)
             {
-                await reporter.CaptureAsync(ex);
+                await errorReporter.CaptureAsync(ex);
                 return "";
             }
 

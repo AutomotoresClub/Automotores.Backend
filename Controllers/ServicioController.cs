@@ -4,11 +4,13 @@ using AutoMapper;
 using Automotores.Backend.Controllers.Resources;
 using Automotores.Backend.Core.Models;
 using Automotores.Backend.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Automotores.Backend.Controllers
 {
+    [Route("/api/servicios")]
     public class ServicioController
     {
         private readonly AutomotoresDbContext context;
@@ -20,12 +22,13 @@ namespace Automotores.Backend.Controllers
             this.context = context;
         }
 
-        [HttpGet("/api/servicios")]
-        public async Task<IEnumerable<KeyValuePairResource>> GetServicios()
+
+        [HttpGet]
+        public async Task<IEnumerable<Servicio>> GetServicios()
         {
             var servicios = await context.Servicios.ToListAsync();
 
-            return mapper.Map<List<Servicio>, List<KeyValuePairResource>>(servicios);
+            return servicios;
         }
     }
 }

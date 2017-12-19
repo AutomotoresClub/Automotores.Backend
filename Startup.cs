@@ -22,11 +22,16 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Automotores.Backend
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -58,8 +63,13 @@ namespace Automotores.Backend
             services.AddDbContext<AutomotoresDbContext>(options => options.UseMySql(Configuration["ConnectionStrings:AutomotoresDatabase"]));
 
             services.AddIdentity<User, IdentityRole>()
-                    .AddEntityFrameworkStores<AutomotoresDbContext>()
-                    .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<AutomotoresDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("OnlyAplicacionMovil", policy => policy.RequireRole("UsuarioAplicacionMovil"));
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -74,32 +84,41 @@ namespace Automotores.Backend
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.AllowedForNewUsers = true;
 
-                // User settings
                 options.User.RequireUniqueEmail = false;
             });
-            services.Configure<CookieAuthenticationOptions>(opt =>
+            services.Configure<CookieAuthenticationEvents>(opt =>
             {
-                services.ConfigureApplicationCookie(options =>
+                opt.OnRedirectToLogin = ctx =>
                 {
-                    options.Cookie.HttpOnly = true;
-                    options.Events.OnRedirectToAccessDenied = (context) =>
-                    {
-                        context.Response.StatusCode = 401;
-                        return Task.CompletedTask;
-                    };
-                    options.Events.OnRedirectToLogin = (context) =>
-                    {
-                        context.Response.StatusCode = 401;
-                        return Task.CompletedTask;
-                    };
-                    options.Events.OnRedirectToLogout = (context) =>
-                    {
-                        context.Response.StatusCode = 401; return Task.CompletedTask;
-                    };
-                    options.Cookie.Expiration = TimeSpan.FromDays(150);
-                    options.SlidingExpiration = true;
-                });
+                    if (ctx.Request.Path.StartsWithSegments("/api"))
+                        ctx.Response.StatusCode = (int)System.Net.HttpStatusCode.Unauthorized;
+
+                    return Task.FromResult(0);
+                };
             });
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+         .AddJwtBearer(options =>
+         {
+             options.TokenValidationParameters =
+                  new TokenValidationParameters
+                  {
+                      ValidateIssuerSigningKey = true,
+                      ValidateLifetime = true,
+                      NameClaimType = JwtRegisteredClaimNames.Sub,
+                      RoleClaimType = "roles",
+                      ValidIssuer = Configuration["JwtSecurityToken:Issuer"],
+                      ValidAudience = Configuration["JwtSecurityToken:Audience"],
+                      IssuerSigningKey =
+                      new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSecurityToken:Key"]))
+                  };
+         });
 
             services.AddMvc();
 
@@ -121,14 +140,13 @@ namespace Automotores.Backend
 
             CreateRoles(serviceProvider);
         }
-
         private void CreateRoles(IServiceProvider serviceProvider)
         {
-
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             Task<IdentityResult> roleResult;
-            string[] roles = { "SuperAdministrador", "Empresa", "AdministradorEmpresa", "UsuarioAplicacionMovil" };
+
+            string[] roles = { "SuperAdministrador", "Empresa", "EmpresaAdministrador", "UsuarioAplicacion" };
 
             string email = "gerencia@automotoresclub.com";
 

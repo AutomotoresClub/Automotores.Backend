@@ -14,11 +14,10 @@ namespace Automotores.Backend.Controllers.Resources
 
         public string DeviceId { get; set; }
 
-        public int Estado { get; set; }
-
         public Blob? DatosEmergencia { get; set; }
 
-        public int CiudadId { get; set; }
+        [Required]
+        public int? CiudadId { get; set; }
 
         [Required]
         public UserResource User { get; set; }

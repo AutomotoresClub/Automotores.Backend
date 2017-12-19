@@ -10,5 +10,7 @@ namespace Automotores.Backend.Extensions
         Task<Vehiculo> GetVehiculo(int id);
         Task<IEnumerable<Vehiculo>> GetVehiculos(int id);
         void Remove(Vehiculo vehiculo);
+
+        bool ValidatePlaca(string placa);
     }
 }

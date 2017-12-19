@@ -5,6 +5,7 @@ using Automotores.Backend.Controllers.Resources;
 using Automotores.Backend.Core;
 using Automotores.Backend.Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Automotores.Backend.Controllers
 {
@@ -29,10 +30,11 @@ namespace Automotores.Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUsuario([FromBody] SaveUsuarioResource usuarioResource)
         {
-            usuarioResource.User.Rol = "UsuarioAplicacionMovil";
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            usuarioResource.User.Rol = "UsuarioAplicacionMovil";
 
             if (await identityService.ValidateUser(usuarioResource.User.Email, usuarioResource.User.Rol))
             {

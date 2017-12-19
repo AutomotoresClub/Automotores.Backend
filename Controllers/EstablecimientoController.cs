@@ -92,10 +92,10 @@ namespace Automotores.Backend.Controllers
             return mapper.Map<IEnumerable<Establecimiento>, IEnumerable<EstablecimientoResource>>(establecimientos);
         }
 
-        [HttpGet("{claseVehiculo}/{servicioVehiculo}")]
-        public async Task<IEnumerable<EstablecimientoResource>> GetEstablecimientos(int claseVehiculo, int servicioVehiculo)
+        [HttpGet("{claseVehiculo}/{servicio}")]
+        public async Task<IEnumerable<EstablecimientoResource>> GetEstablecimientos(int claseVehiculo, int servicio)
         {
-            var establecimientos = await repository.GetEstablecimientos(claseVehiculo, servicioVehiculo, false);
+            var establecimientos = await repository.GetEstablecimientos(claseVehiculo, servicio, false);
 
             return mapper.Map<IEnumerable<Establecimiento>, IEnumerable<EstablecimientoResource>>(establecimientos);
         }

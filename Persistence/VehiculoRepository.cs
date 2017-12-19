@@ -49,5 +49,10 @@ namespace Automotores.Backend.Persistence
         {
             context.Remove(vehiculo);
         }
+
+        public bool ValidatePlaca(string placa)
+        {
+            return context.Vehiculos.Any(v => v.Placa == placa);
+        }
     }
 }

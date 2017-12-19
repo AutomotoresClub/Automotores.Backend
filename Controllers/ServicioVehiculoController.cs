@@ -9,24 +9,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Automotores.Backend.Controllers
 {
-    [Route("/api/claseVehiculo")]
-    public class ClaseVehiculoController : Controller
+    [Route("/api/servicioVehiculo")]
+    public class ServicioVehiculoController : Controller
     {
         private readonly AutomotoresDbContext context;
         private readonly IMapper mapper;
-
-        public ClaseVehiculoController(AutomotoresDbContext context, IMapper mapper)
+        public ServicioVehiculoController(AutomotoresDbContext context, IMapper mapper)
         {
             this.mapper = mapper;
             this.context = context;
+
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ClaseVehiculoResource>> GetClaseVehiculo()
+        public async Task<IEnumerable<KeyValuePairResource>> GetServicioVehiculo()
         {
-            var servicios = await context.ClaseVehiculo.ToListAsync();
+            var servicios = await context.ServicioVehiculo.ToListAsync();
 
-            return mapper.Map<List<ClaseVehiculo>, List<ClaseVehiculoResource>>(servicios);
+            return mapper.Map<List<ServicioVehiculo>, List<KeyValuePairResource>>(servicios);
         }
     }
 }

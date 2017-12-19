@@ -16,7 +16,6 @@ namespace Automotores.Backend.Core.Services
 
         private readonly IErrorReporter reporter;
         IAmazonS3 s3Client;
-        AmazonS3Config config;
         private readonly IHostingEnvironment host;
 
         public UploadService(IErrorReporter reporter, IHostingEnvironment host)

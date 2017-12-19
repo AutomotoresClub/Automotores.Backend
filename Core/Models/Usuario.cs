@@ -32,7 +32,8 @@ namespace Automotores.Backend.Core.Models
         public DateTime? FechaActualizacion { get; set; }
 
         public Ciudad Ciudad { get; set; }
-
+        
+        [Required]
         public int CiudadId { get; set; }
 
         public User User { get; set; }

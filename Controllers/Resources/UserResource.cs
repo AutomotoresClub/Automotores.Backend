@@ -10,7 +10,7 @@ namespace Automotores.Backend.Controllers.Resources
 
 
         [Required]
-        [StringLength(100, ErrorMessage = "La {0} debe ser almenos {2} y un maximo {1} de longitud.", MinimumLength = 6)]
+        [StringLength(16, ErrorMessage = "La {0} debe ser almenos {2} y un maximo {1} de longitud.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string Contraseña { get; set; }
 

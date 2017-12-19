@@ -6,12 +6,15 @@ using Automotores.Backend.Controllers.Resources;
 using Automotores.Backend.Core;
 using Automotores.Backend.Core.Models;
 using Automotores.Backend.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace Automotores.Backend.Controllers
 {
+        [Authorize(Policy = "OnlyAplicacionMovil")]
+
     [Route("/api/vehiculos")]
     public class VehiculoController : Controller
     {
@@ -95,7 +98,7 @@ namespace Automotores.Backend.Controllers
 
             vehiculo = mapper.Map<SaveVehiculoResource, Vehiculo>(vehiculoResource, vehiculo);
 
-            if(archivoExiste) 
+            if (archivoExiste)
                 vehiculo.Imagen = await uploadService.UploadFile(imagenNueva, "ac-automotor");
             else
                 vehiculo.Imagen = vehiculo.Imagen;
@@ -141,6 +144,21 @@ namespace Automotores.Backend.Controllers
             await unitOfWork.CompleteAsync();
 
             return Ok(id);
+        }
+
+        [HttpGet("validar/placas/{placa}")]
+        public IActionResult ValidarPlaca(string placa)
+        {
+            if (placa == null)
+                return NotFound();
+
+            var vehiculoExiste = repository.ValidatePlaca(placa);
+
+            return Ok(new
+            {
+                existe = vehiculoExiste,
+                placa = placa
+            });
         }
     }
 }

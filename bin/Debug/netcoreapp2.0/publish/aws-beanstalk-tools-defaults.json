@@ -4,7 +4,7 @@
     "profile" : "seguros",
     "region"  : "us-west-2",
     "application" : "AutomotoresBackend",
-    "environment" : "AutomotoresBackend-dev",
+    "environment" : "AutomotoresBackend-test",
     "cname"       : "automotoresbackend-test",
     "solution-stack" : "64bit Windows Server 2016 v1.2.0 running IIS 10.0",
     "environment-type" : "SingleInstance",

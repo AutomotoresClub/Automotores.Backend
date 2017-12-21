@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace Automotores.Backend.Controllers
 {
-        [Authorize(Policy = "OnlyAplicacionMovil")]
+    [Authorize(Policy = "OnlyAplicacionMovil")]
 
     [Route("/api/vehiculos")]
     public class VehiculoController : Controller

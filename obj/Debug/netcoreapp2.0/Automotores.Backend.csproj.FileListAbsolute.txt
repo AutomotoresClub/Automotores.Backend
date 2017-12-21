@@ -18,3 +18,4 @@ C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\o
 C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.AssemblyInfo.cs
 C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.dll
 C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.pdb
+C:\Users\Alejandro\Desktop\TRABAJO\Automotores.Development\Automotores.Backend\obj\Debug\netcoreapp2.0\Automotores.Backend.csprojResolveAssemblyReference.cache
